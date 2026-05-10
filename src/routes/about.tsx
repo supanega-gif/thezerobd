@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Heart, Users, Award, Sparkles } from "lucide-react";
+import { Reveal } from "@/components/reveal";
 import interior from "@/assets/interior.jpg";
 import storefront from "@/assets/storefront.png";
 import spread from "@/assets/spread.jpg";
