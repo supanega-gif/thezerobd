@@ -17,7 +17,7 @@ export function SiteHeader() {
     <header className="sticky top-0 z-50 w-full border-b border-border/60 bg-background/70 backdrop-blur-xl supports-[backdrop-filter]:bg-background/55">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6">
         <Link to="/" className="group flex items-center gap-3">
-          <img src={logo} alt="The Zero" className="h-10 w-auto transition-transform duration-500 group-hover:scale-105 sm:h-11" />
+          <img src={logo} alt="The Zero" className="h-14 w-auto transition-transform duration-500 group-hover:scale-105 sm:h-16" />
           <span className="hidden text-[10px] uppercase tracking-[0.32em] text-primary sm:inline">Taste the Art</span>
         </Link>
 
