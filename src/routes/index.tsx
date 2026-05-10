@@ -21,9 +21,9 @@ export const Route = createFileRoute("/")({
 });
 
 const highlights = [
-  { icon: Flame, title: "Wood-Fired Grills", text: "Peri-peri, jerk and lemon-herb chicken kissed by open flame." },
-  { icon: Utensils, title: "Family Dining", text: "Roomy seating across two floors, perfect for family gatherings." },
-  { icon: Coffee, title: "Cafe & Desserts", text: "Lattes, mochas and our famous molten lava cake." },
+  { icon: Flame, title: "Wood-Fired Grills", text: "Peri-peri, jerk and lemon-herb chicken kissed by open flame.", category: "grills" },
+  { icon: Utensils, title: "Pizza & Starters", text: "Wood-fired pizzas, wings and shareable plates for the table.", category: "pizza" },
+  { icon: Coffee, title: "Cafe & Desserts", text: "Lattes, mochas and our famous molten lava cake.", category: "drinks" },
 ];
 
 const popular = menu.flatMap((c) => c.items.filter((i) => i.popular)).slice(0, 6);
