@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Star } from "lucide-react";
+import { Reveal } from "@/components/reveal";
 import { menu } from "@/data/menu";
 
 export const Route = createFileRoute("/menu")({
