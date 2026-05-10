@@ -69,19 +69,21 @@ function Home() {
 
       {/* HIGHLIGHTS */}
       <section className="mx-auto max-w-7xl px-4 py-24 sm:px-6">
-        <div className="mb-14 text-center">
+        <Reveal className="mb-14 text-center">
           <p className="text-sm uppercase tracking-[0.3em] text-primary">What we do</p>
           <h2 className="mt-3 font-display text-4xl md:text-5xl">A taste of every craving</h2>
-        </div>
+        </Reveal>
         <div className="grid gap-6 md:grid-cols-3">
-          {highlights.map((h) => (
-            <div key={h.title} className="group rounded-2xl border border-border bg-card p-8 transition-all hover:border-primary/40 hover:shadow-warm">
-              <div className="grid h-12 w-12 place-items-center rounded-xl bg-gradient-gold text-primary-foreground">
-                <h.icon className="h-5 w-5" />
+          {highlights.map((h, i) => (
+            <Reveal key={h.title} delay={i * 120}>
+              <div className="hover-lift group h-full rounded-2xl border border-border bg-card p-8 hover:border-primary/40">
+                <div className="float-slow grid h-12 w-12 place-items-center rounded-xl bg-gradient-gold text-primary-foreground transition-transform group-hover:scale-110">
+                  <h.icon className="h-5 w-5" />
+                </div>
+                <h3 className="mt-5 font-display text-2xl">{h.title}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{h.text}</p>
               </div>
-              <h3 className="mt-5 font-display text-2xl">{h.title}</h3>
-              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{h.text}</p>
-            </div>
+            </Reveal>
           ))}
         </div>
       </section>
@@ -89,15 +91,19 @@ function Home() {
       {/* SIGNATURE STORY */}
       <section className="bg-card/40 py-24">
         <div className="mx-auto grid max-w-7xl items-center gap-12 px-4 sm:px-6 md:grid-cols-2">
-          <img
-            src={interior}
-            alt="The Zero restaurant warm interior"
-            width={1400}
-            height={900}
-            loading="lazy"
-            className="rounded-2xl object-cover shadow-warm"
-          />
-          <div>
+          <Reveal>
+            <div className="img-zoom rounded-2xl shadow-warm">
+              <img
+                src={interior}
+                alt="The Zero restaurant warm interior"
+                width={1400}
+                height={900}
+                loading="lazy"
+                className="rounded-2xl object-cover"
+              />
+            </div>
+          </Reveal>
+          <Reveal delay={150}>
             <p className="text-sm uppercase tracking-[0.3em] text-primary">Our story</p>
             <h2 className="mt-3 font-display text-4xl md:text-5xl">A warm corner of Dhaka.</h2>
             <p className="mt-6 text-base leading-relaxed text-muted-foreground">
@@ -106,52 +112,56 @@ function Home() {
             <p className="mt-4 text-base leading-relaxed text-muted-foreground">
               Whether you are stopping in for a quick grilled platter or settling in for a long evening with family, our team is here to make it memorable.
             </p>
-            <Button asChild className="mt-8 bg-gradient-gold text-primary-foreground hover:opacity-90">
+            <Button asChild className="mt-8 bg-gradient-gold text-primary-foreground hover:opacity-90 transition-transform hover:-translate-y-0.5">
               <Link to="/about">Read more</Link>
             </Button>
-          </div>
+          </Reveal>
         </div>
       </section>
 
       {/* POPULAR */}
       <section className="mx-auto max-w-7xl px-4 py-24 sm:px-6">
-        <div className="mb-14 flex flex-wrap items-end justify-between gap-4">
+        <Reveal className="mb-14 flex flex-wrap items-end justify-between gap-4">
           <div>
             <p className="text-sm uppercase tracking-[0.3em] text-primary">Loved by guests</p>
             <h2 className="mt-3 font-display text-4xl md:text-5xl">Most popular</h2>
           </div>
-          <Button asChild variant="outline">
+          <Button asChild variant="outline" className="transition-transform hover:-translate-y-0.5">
             <Link to="/menu">View full menu</Link>
           </Button>
-        </div>
+        </Reveal>
         <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-          {popular.map((item) => (
-            <div key={item.name} className="rounded-2xl border border-border bg-card p-6 transition-all hover:border-primary/40">
-              <div className="flex items-baseline justify-between gap-4">
-                <h3 className="font-display text-xl">{item.name}</h3>
-                <span className="font-display text-lg text-primary">{item.price}</span>
+          {popular.map((item, i) => (
+            <Reveal key={item.name} delay={i * 80}>
+              <div className="hover-lift h-full rounded-2xl border border-border bg-card p-6 hover:border-primary/40">
+                <div className="flex items-baseline justify-between gap-4">
+                  <h3 className="font-display text-xl">{item.name}</h3>
+                  <span className="font-display text-lg text-primary">{item.price}</span>
+                </div>
+                <p className="mt-2 text-sm text-muted-foreground">{item.description}</p>
               </div>
-              <p className="mt-2 text-sm text-muted-foreground">{item.description}</p>
-            </div>
+            </Reveal>
           ))}
         </div>
       </section>
 
       {/* CTA */}
       <section className="relative isolate overflow-hidden">
-        <img src={spread} alt="A spread of pizza, wings, fries and drinks" width={1400} height={900} loading="lazy" className="absolute inset-0 h-full w-full object-cover opacity-30" />
+        <img src={spread} alt="A spread of pizza, wings, fries and drinks" width={1400} height={900} loading="lazy" className="ken-burns absolute inset-0 h-full w-full object-cover opacity-30" />
         <div className="absolute inset-0 bg-gradient-to-t from-background via-background/80 to-background/60" />
         <div className="relative mx-auto max-w-3xl px-4 py-24 text-center sm:px-6">
-          <h2 className="font-display text-4xl md:text-5xl">Reserve your table tonight</h2>
-          <p className="mt-4 text-muted-foreground">Dine-in and takeaway available. Call us to plan your visit.</p>
-          <div className="mt-8 flex flex-wrap justify-center gap-3">
-            <Button asChild size="lg" className="bg-gradient-gold text-primary-foreground hover:opacity-90 shadow-warm">
-              <a href="tel:01729791000">Call 01729-791000</a>
-            </Button>
-            <Button asChild size="lg" variant="outline">
-              <Link to="/contact">Get directions</Link>
-            </Button>
-          </div>
+          <Reveal>
+            <h2 className="font-display text-4xl md:text-5xl">Reserve your table <span className="text-gradient-gold">tonight</span></h2>
+            <p className="mt-4 text-muted-foreground">Dine-in and takeaway available. Call us to plan your visit.</p>
+            <div className="mt-8 flex flex-wrap justify-center gap-3">
+              <Button asChild size="lg" className="shimmer bg-gradient-gold text-primary-foreground hover:opacity-90 shadow-warm">
+                <a href="tel:01729791000">Call 01729-791000</a>
+              </Button>
+              <Button asChild size="lg" variant="outline" className="transition-transform hover:-translate-y-0.5">
+                <Link to="/contact">Get directions</Link>
+              </Button>
+            </div>
+          </Reveal>
         </div>
       </section>
     </>
