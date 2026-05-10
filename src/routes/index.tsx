@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Star, Clock, MapPin, Utensils, Flame, Coffee } from "lucide-react";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Reveal } from "@/components/reveal";
 import hero from "@/assets/hero.jpg";
@@ -28,6 +29,13 @@ const highlights = [
 const popular = menu.flatMap((c) => c.items.filter((i) => i.popular)).slice(0, 6);
 
 function Home() {
+  const [scrollY, setScrollY] = useState(0);
+  useEffect(() => {
+    const onScroll = () => setScrollY(window.scrollY);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+  const heroProgress = Math.min(scrollY / 600, 1);
   return (
     <>
       {/* HERO */}
@@ -37,7 +45,11 @@ function Home() {
           alt="Signature peri-peri grilled chicken at The Zero"
           width={1600}
           height={1100}
-          className="ken-burns absolute inset-0 h-full w-full object-cover"
+          style={{
+            transform: `translate3d(0, ${scrollY * 0.4}px, 0) scale(${1 + heroProgress * 0.08})`,
+            filter: `blur(${heroProgress * 4}px) brightness(${1 - heroProgress * 0.25})`,
+          }}
+          className="ken-burns absolute inset-0 h-full w-full object-cover transition-[filter] duration-300 will-change-transform"
         />
         <div className="absolute inset-0 bg-hero-overlay" />
         <div className="relative mx-auto flex min-h-[88vh] max-w-7xl flex-col justify-end px-4 pb-20 pt-32 sm:px-6 md:pb-28 md:pt-40">
@@ -133,13 +145,17 @@ function Home() {
         <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
           {popular.map((item, i) => (
             <Reveal key={item.name} delay={i * 80}>
-              <div className="hover-lift h-full rounded-2xl border border-border bg-card p-6 hover:border-primary/40">
+              <Link
+                to="/menu"
+                hash={menu.find((c) => c.items.includes(item))?.id}
+                className="hover-lift block h-full rounded-2xl border border-border bg-card p-6 hover:border-primary/40"
+              >
                 <div className="flex items-baseline justify-between gap-4">
                   <h3 className="font-display text-xl">{item.name}</h3>
                   <span className="font-display text-lg text-primary">{item.price}</span>
                 </div>
                 <p className="mt-2 text-sm text-muted-foreground">{item.description}</p>
-              </div>
+              </Link>
             </Reveal>
           ))}
         </div>
