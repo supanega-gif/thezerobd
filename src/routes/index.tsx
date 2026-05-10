@@ -40,8 +40,8 @@ function Home() {
         />
         <div className="absolute inset-0 bg-hero-overlay" />
         <div className="relative mx-auto flex min-h-[88vh] max-w-7xl flex-col justify-end px-4 pb-20 pt-32 sm:px-6 md:pb-28 md:pt-40">
-          <p className="mb-4 inline-flex items-center gap-3 text-xs uppercase tracking-[0.4em] text-primary">
-            <span className="h-px w-10 bg-primary" /> Taste the Art <span className="h-px w-10 bg-primary" />
+          <p className="mb-5 inline-flex items-center gap-3 self-start rounded-full border border-primary/40 bg-background/70 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.4em] text-primary shadow-warm backdrop-blur">
+            <span className="h-1.5 w-1.5 rounded-full bg-primary" /> Taste the Art <span className="h-1.5 w-1.5 rounded-full bg-primary" />
           </p>
           <h1 className="max-w-3xl font-display text-5xl leading-[1.05] sm:text-6xl md:text-7xl">
             Where flavour <span className="text-gradient-gold">meets warmth.</span>
