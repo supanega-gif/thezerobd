@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Star, Clock, MapPin, Utensils, Flame, Coffee } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Reveal } from "@/components/reveal";
 import hero from "@/assets/hero.jpg";
 import interior from "@/assets/interior.jpg";
 import spread from "@/assets/spread.jpg";
