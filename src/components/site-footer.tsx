@@ -1,16 +1,15 @@
 import { Link } from "@tanstack/react-router";
 import { MapPin, Phone, Clock } from "lucide-react";
+import logo from "@/assets/logo.png";
 
 export function SiteFooter() {
   return (
     <footer className="border-t border-border/60 bg-card/40">
       <div className="mx-auto grid max-w-7xl gap-10 px-4 py-14 sm:px-6 md:grid-cols-4">
         <div className="md:col-span-2">
-          <div className="flex items-center gap-2">
-            <span className="grid h-9 w-9 place-items-center rounded-full bg-gradient-gold text-primary-foreground font-display text-lg font-bold">0</span>
-            <span className="font-display text-xl">The Zero</span>
-          </div>
-          <p className="mt-4 max-w-md text-sm text-muted-foreground">
+          <img src={logo} alt="The Zero" className="h-14 w-auto" />
+          <p className="mt-2 text-xs uppercase tracking-[0.4em] text-primary">Taste the Art</p>
+          <p className="mt-5 max-w-md text-sm text-muted-foreground">
             A warm family restaurant in Dhaka serving grilled favourites, wood-fired pizza, and hand-crafted drinks since day one.
           </p>
         </div>
