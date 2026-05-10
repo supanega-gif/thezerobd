@@ -21,9 +21,9 @@ export const Route = createFileRoute("/")({
 });
 
 const highlights = [
-  { icon: Flame, title: "Wood-Fired Grills", text: "Peri-peri, jerk and lemon-herb chicken kissed by open flame." },
-  { icon: Utensils, title: "Family Dining", text: "Roomy seating across two floors, perfect for family gatherings." },
-  { icon: Coffee, title: "Cafe & Desserts", text: "Lattes, mochas and our famous molten lava cake." },
+  { icon: Flame, title: "Wood-Fired Grills", text: "Peri-peri, jerk and lemon-herb chicken kissed by open flame.", category: "grills" },
+  { icon: Utensils, title: "Pizza & Starters", text: "Wood-fired pizzas, wings and shareable plates for the table.", category: "pizza" },
+  { icon: Coffee, title: "Cafe & Desserts", text: "Lattes, mochas and our famous molten lava cake.", category: "drinks" },
 ];
 
 const popular = menu.flatMap((c) => c.items.filter((i) => i.popular)).slice(0, 6);
@@ -87,13 +87,17 @@ function Home() {
         <div className="grid gap-6 md:grid-cols-3">
           {highlights.map((h, i) => (
             <Reveal key={h.title} delay={i * 120}>
-              <div className="hover-lift group h-full rounded-2xl border border-border bg-card p-8 hover:border-primary/40">
+              <Link
+                to="/menu"
+                hash={h.category}
+                className="hover-lift group block h-full rounded-2xl border border-border bg-card p-8 hover:border-primary/40"
+              >
                 <div className="float-slow grid h-12 w-12 place-items-center rounded-xl bg-gradient-gold text-primary-foreground transition-transform group-hover:scale-110">
                   <h.icon className="h-5 w-5" />
                 </div>
                 <h3 className="mt-5 font-display text-2xl">{h.title}</h3>
                 <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{h.text}</p>
-              </div>
+              </Link>
             </Reveal>
           ))}
         </div>
