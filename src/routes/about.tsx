@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Heart, Users, Award, Sparkles } from "lucide-react";
 import interior from "@/assets/interior.jpg";
+import storefront from "@/assets/storefront.png";
 import spread from "@/assets/spread.jpg";
 
 export const Route = createFileRoute("/about")({
@@ -26,9 +27,13 @@ function AboutPage() {
   return (
     <div className="mx-auto max-w-6xl px-4 py-20 sm:px-6">
       <header className="max-w-3xl">
-        <p className="text-sm uppercase tracking-[0.3em] text-primary">About us</p>
+        <p className="text-xs uppercase tracking-[0.4em] text-primary">Taste the Art</p>
         <h1 className="mt-3 font-display text-5xl md:text-6xl">Good food. Warm people. <span className="text-gradient-gold">Always.</span></h1>
       </header>
+
+      <figure className="mt-12 overflow-hidden rounded-3xl border border-border shadow-warm">
+        <img src={storefront} alt="The Zero storefront in Dhaka, lit up at night" className="w-full object-cover" loading="lazy" />
+      </figure>
 
       <div className="mt-16 grid items-start gap-12 md:grid-cols-2">
         <img src={interior} alt="Inside The Zero" width={1400} height={900} loading="lazy" className="rounded-2xl object-cover shadow-warm" />
