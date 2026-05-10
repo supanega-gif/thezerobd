@@ -37,29 +37,29 @@ function Home() {
           alt="Signature peri-peri grilled chicken at The Zero"
           width={1600}
           height={1100}
-          className="absolute inset-0 h-full w-full object-cover"
+          className="ken-burns absolute inset-0 h-full w-full object-cover"
         />
         <div className="absolute inset-0 bg-hero-overlay" />
         <div className="relative mx-auto flex min-h-[88vh] max-w-7xl flex-col justify-end px-4 pb-20 pt-32 sm:px-6 md:pb-28 md:pt-40">
-          <p className="mb-5 inline-flex items-center gap-3 self-start rounded-full border border-primary/40 bg-background/70 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.4em] text-primary shadow-warm backdrop-blur">
+          <p className="animate-fade-up mb-5 inline-flex items-center gap-3 self-start rounded-full border border-primary/40 bg-background/70 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.4em] text-primary shadow-warm backdrop-blur" style={{ animationDelay: "100ms" }}>
             <span className="h-1.5 w-1.5 rounded-full bg-primary" /> Taste the Art <span className="h-1.5 w-1.5 rounded-full bg-primary" />
           </p>
-          <h1 className="max-w-3xl font-display text-5xl leading-[1.05] sm:text-6xl md:text-7xl">
+          <h1 className="animate-fade-up max-w-3xl font-display text-5xl leading-[1.05] sm:text-6xl md:text-7xl" style={{ animationDelay: "250ms" }}>
             Where flavour <span className="text-gradient-gold">meets warmth.</span>
           </h1>
-          <p className="mt-6 max-w-xl text-lg text-muted-foreground">
+          <p className="animate-fade-up mt-6 max-w-xl text-lg text-muted-foreground" style={{ animationDelay: "400ms" }}>
             Grilled favourites, wood-fired pizza and hand-crafted drinks — served by a team that treats every guest like family.
           </p>
-          <div className="mt-8 flex flex-wrap gap-3">
-            <Button asChild size="lg" className="bg-gradient-gold text-primary-foreground hover:opacity-90 shadow-warm">
+          <div className="animate-fade-up mt-8 flex flex-wrap gap-3" style={{ animationDelay: "550ms" }}>
+            <Button asChild size="lg" className="shimmer bg-gradient-gold text-primary-foreground hover:opacity-90 shadow-warm">
               <Link to="/menu">Explore the Menu</Link>
             </Button>
-            <Button asChild size="lg" variant="outline" className="border-border bg-background/40 backdrop-blur">
+            <Button asChild size="lg" variant="outline" className="border-border bg-background/40 backdrop-blur transition-transform hover:-translate-y-0.5">
               <Link to="/contact">Find Us</Link>
             </Button>
           </div>
 
-          <div className="mt-12 grid max-w-2xl gap-6 sm:grid-cols-3">
+          <div className="animate-fade-up mt-12 grid max-w-2xl gap-6 sm:grid-cols-3" style={{ animationDelay: "700ms" }}>
             <Stat icon={Star} label="4.3 / 5 · 187 reviews" />
             <Stat icon={Clock} label="Open daily · Closes 11 PM" />
             <Stat icon={MapPin} label="BAFWWA, Dhaka 1212" />
