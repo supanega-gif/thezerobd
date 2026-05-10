@@ -127,11 +127,88 @@
 @layer utilities {
   .text-gradient-gold {
     background: var(--gradient-gold);
+    background-size: 200% 200%;
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
+    animation: gradient-shift 8s ease-in-out infinite;
   }
   .bg-gradient-gold { background: var(--gradient-gold); }
   .shadow-warm { box-shadow: var(--shadow-warm); }
   .bg-hero-overlay { background: var(--gradient-hero); }
+
+  .hover-lift {
+    transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.4s ease, border-color 0.3s ease;
+  }
+  .hover-lift:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-warm);
+  }
+
+  .img-zoom { overflow: hidden; }
+  .img-zoom > img {
+    transition: transform 1.2s cubic-bezier(0.2, 0.8, 0.2, 1), filter 0.6s ease;
+  }
+  .img-zoom:hover > img { transform: scale(1.06); }
+
+  .ken-burns { animation: ken-burns 22s ease-in-out infinite alternate; }
+
+  .shimmer {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+  }
+  .shimmer::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(110deg, transparent 30%, oklch(1 0 0 / 0.18) 50%, transparent 70%);
+    transform: translateX(-100%);
+    animation: shimmer 3.2s ease-in-out infinite;
+    pointer-events: none;
+  }
+
+  .float-slow { animation: float-slow 6s ease-in-out infinite; }
+
+  .nav-underline {
+    position: relative;
+  }
+  .nav-underline::after {
+    content: "";
+    position: absolute;
+    left: 0; right: 0; bottom: -6px;
+    height: 1px;
+    background: var(--gradient-gold);
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+  .nav-underline:hover::after,
+  .nav-underline[data-status="active"]::after {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+
+  .animate-fade-up { animation: fade-up 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) both; }
+}
+
+@keyframes gradient-shift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+@keyframes ken-burns {
+  0% { transform: scale(1) translate(0, 0); }
+  100% { transform: scale(1.08) translate(-1%, -1%); }
+}
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  60%, 100% { transform: translateX(100%); }
+}
+@keyframes float-slow {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
 }
