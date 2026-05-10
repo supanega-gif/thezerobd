@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { MapPin, Phone, Clock, UtensilsCrossed, ShoppingBag } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Reveal } from "@/components/reveal";
 
 export const Route = createFileRoute("/contact")({
   head: () => ({
