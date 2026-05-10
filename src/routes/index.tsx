@@ -46,10 +46,9 @@ function Home() {
           width={1600}
           height={1100}
           style={{
-            transform: `translate3d(0, ${scrollY * 0.4}px, 0) scale(${1 + heroProgress * 0.08})`,
-            filter: `blur(${heroProgress * 4}px) brightness(${1 - heroProgress * 0.25})`,
+            transform: `translate3d(0, ${scrollY * 0.3}px, 0) scale(${1 + heroProgress * 0.35})`,
           }}
-          className="ken-burns absolute inset-0 h-full w-full object-cover transition-[filter] duration-300 will-change-transform"
+          className="absolute inset-0 h-full w-full object-cover will-change-transform"
         />
         <div className="absolute inset-0 bg-hero-overlay" />
         <div className="relative mx-auto flex min-h-[88vh] max-w-7xl flex-col justify-end px-4 pb-20 pt-32 sm:px-6 md:pb-28 md:pt-40">
