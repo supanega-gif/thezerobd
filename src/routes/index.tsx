@@ -145,13 +145,17 @@ function Home() {
         <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
           {popular.map((item, i) => (
             <Reveal key={item.name} delay={i * 80}>
-              <div className="hover-lift h-full rounded-2xl border border-border bg-card p-6 hover:border-primary/40">
+              <Link
+                to="/menu"
+                hash={menu.find((c) => c.items.includes(item))?.id}
+                className="hover-lift block h-full rounded-2xl border border-border bg-card p-6 hover:border-primary/40"
+              >
                 <div className="flex items-baseline justify-between gap-4">
                   <h3 className="font-display text-xl">{item.name}</h3>
                   <span className="font-display text-lg text-primary">{item.price}</span>
                 </div>
                 <p className="mt-2 text-sm text-muted-foreground">{item.description}</p>
-              </div>
+              </Link>
             </Reveal>
           ))}
         </div>
