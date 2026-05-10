@@ -29,6 +29,13 @@ const highlights = [
 const popular = menu.flatMap((c) => c.items.filter((i) => i.popular)).slice(0, 6);
 
 function Home() {
+  const [scrollY, setScrollY] = useState(0);
+  useEffect(() => {
+    const onScroll = () => setScrollY(window.scrollY);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+  const heroProgress = Math.min(scrollY / 600, 1);
   return (
     <>
       {/* HERO */}
@@ -38,7 +45,11 @@ function Home() {
           alt="Signature peri-peri grilled chicken at The Zero"
           width={1600}
           height={1100}
-          className="ken-burns absolute inset-0 h-full w-full object-cover"
+          style={{
+            transform: `translate3d(0, ${scrollY * 0.4}px, 0) scale(${1 + heroProgress * 0.08})`,
+            filter: `blur(${heroProgress * 4}px) brightness(${1 - heroProgress * 0.25})`,
+          }}
+          className="ken-burns absolute inset-0 h-full w-full object-cover transition-[filter] duration-300 will-change-transform"
         />
         <div className="absolute inset-0 bg-hero-overlay" />
         <div className="relative mx-auto flex min-h-[88vh] max-w-7xl flex-col justify-end px-4 pb-20 pt-32 sm:px-6 md:pb-28 md:pt-40">
