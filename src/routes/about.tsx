@@ -4,6 +4,11 @@ import { Reveal } from "@/components/reveal";
 import interior from "@/assets/interior.jpg";
 import storefront from "@/assets/storefront.png";
 import spread from "@/assets/spread.jpg";
+import storefrontNight from "@/assets/storefront-night.jpg";
+import interiorStairs from "@/assets/interior-stairs.jpg";
+import interiorTeal from "@/assets/interior-teal.jpg";
+import upload3 from "@/assets/upload-3.jpg";
+import upload5 from "@/assets/upload-5.jpg";
 
 export const Route = createFileRoute("/about")({
   head: () => ({
@@ -36,14 +41,14 @@ function AboutPage() {
 
       <Reveal>
         <figure className="img-zoom mt-12 rounded-3xl border border-border shadow-warm">
-          <img src={storefront} alt="The Zero storefront in Dhaka, lit up at night" className="w-full object-cover" loading="lazy" />
+          <img src={storefrontNight} alt="The Zero storefront in Dhaka, lit up at night" className="w-full object-cover" loading="lazy" />
         </figure>
       </Reveal>
 
       <div className="mt-16 grid items-start gap-12 md:grid-cols-2">
         <Reveal>
           <div className="img-zoom rounded-2xl shadow-warm">
-            <img src={interior} alt="Inside The Zero" width={1400} height={900} loading="lazy" className="rounded-2xl object-cover" />
+            <img src={interiorStairs} alt="Inside The Zero — main dining room with feature staircase" width={1400} height={900} loading="lazy" className="rounded-2xl object-cover" />
           </div>
         </Reveal>
         <Reveal delay={150}>
@@ -66,6 +71,26 @@ function AboutPage() {
                 </div>
                 <h3 className="mt-4 font-display text-xl">{v.title}</h3>
                 <p className="mt-1 text-sm text-muted-foreground">{v.text}</p>
+              </div>
+            </Reveal>
+          ))}
+        </div>
+      </section>
+
+      <section className="mt-24">
+        <Reveal><h2 className="font-display text-4xl">Step inside</h2></Reveal>
+        <div className="mt-10 grid gap-4 md:grid-cols-3">
+          {[
+            { src: interiorTeal, alt: "Teal velvet seating and indoor plants" },
+            { src: upload3, alt: "Warm wooden tables and banquette seating" },
+            { src: upload5, alt: "Two-floor dining with hanging lights" },
+            { src: interior, alt: "Cosy corner of The Zero" },
+            { src: spread, alt: "A spread of pizza, wings and drinks" },
+            { src: storefront, alt: "The Zero storefront" },
+          ].map((p, i) => (
+            <Reveal key={p.alt} delay={i * 80}>
+              <div className="img-zoom aspect-[4/3] overflow-hidden rounded-2xl border border-border shadow-warm">
+                <img src={p.src} alt={p.alt} loading="lazy" className="h-full w-full object-cover" />
               </div>
             </Reveal>
           ))}

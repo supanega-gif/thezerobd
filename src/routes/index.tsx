@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Reveal } from "@/components/reveal";
 import hero from "@/assets/hero.jpg";
-import interior from "@/assets/interior.jpg";
+import interior from "@/assets/interior-teal.jpg";
 import spread from "@/assets/spread.jpg";
 import { menu } from "@/data/menu";
 
