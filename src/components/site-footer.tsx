@@ -19,7 +19,7 @@ export function SiteFooter() {
           <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
             <li className="flex gap-2"><MapPin className="mt-0.5 h-4 w-4 text-primary" />BAFWWA Shopping Complex, Bir Uttam Ziaur Rahman Rd, Dhaka 1212</li>
             <li className="flex gap-2"><Phone className="h-4 w-4 text-primary" /><a href="tel:01729791000" className="hover:text-foreground">01729-791000</a></li>
-            <li className="flex gap-2"><Clock className="h-4 w-4 text-primary" />Open daily · Closes 11 PM</li>
+            <li className="flex gap-2"><Clock className="h-4 w-4 text-primary" />Open daily · 10 AM – 11 PM</li>
           </ul>
         </div>
 
