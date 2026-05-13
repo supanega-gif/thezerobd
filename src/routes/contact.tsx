@@ -16,13 +16,13 @@ export const Route = createFileRoute("/contact")({
 });
 
 const hours = [
-  ["Monday", "11:00 AM – 11:00 PM"],
-  ["Tuesday", "11:00 AM – 11:00 PM"],
-  ["Wednesday", "11:00 AM – 11:00 PM"],
-  ["Thursday", "11:00 AM – 11:00 PM"],
-  ["Friday", "11:00 AM – 11:00 PM"],
-  ["Saturday", "11:00 AM – 11:00 PM"],
-  ["Sunday", "11:00 AM – 11:00 PM"],
+  ["Monday", "10:00 AM – 11:00 PM"],
+  ["Tuesday", "10:00 AM – 11:00 PM"],
+  ["Wednesday", "10:00 AM – 11:00 PM"],
+  ["Thursday", "10:00 AM – 11:00 PM"],
+  ["Friday", "10:00 AM – 11:00 PM"],
+  ["Saturday", "10:00 AM – 11:00 PM"],
+  ["Sunday", "10:00 AM – 11:00 PM"],
 ];
 
 function ContactPage() {
@@ -42,7 +42,7 @@ function ContactPage() {
         {[
           { icon: MapPin, title: "Address", lines: ["BAFWWA Shopping Complex", "Bir Uttam Ziaur Rahman Rd", "Dhaka 1212"] },
           { icon: Phone, title: "Phone", lines: [<a key="p" href="tel:01729791000" className="text-foreground hover:text-primary">01729-791000</a>] },
-          { icon: Clock, title: "Hours", lines: ["Open daily", "11:00 AM – 11:00 PM"] },
+          { icon: Clock, title: "Hours", lines: ["Open daily", "10:00 AM – 11:00 PM"] },
         ].map((c, i) => (
           <Reveal key={c.title} delay={i * 100}>
             <InfoCard icon={c.icon} title={c.title} lines={c.lines as React.ReactNode[]} />
