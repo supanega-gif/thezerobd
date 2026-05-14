@@ -35,7 +35,7 @@ function AboutPage() {
       <header className="max-w-3xl">
         <p className="animate-fade-up text-xs uppercase tracking-[0.4em] text-primary">Taste the Art</p>
         <h1 className="animate-fade-up mt-3 font-display text-5xl md:text-6xl" style={{ animationDelay: "150ms" }}>
-          Good food. Warm people. <span className="text-gradient-gold">Always.</span>
+          About The Zero — <span className="text-gradient-gold">Our story and values</span>
         </h1>
       </header>
 

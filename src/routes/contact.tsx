@@ -11,6 +11,34 @@ export const Route = createFileRoute("/contact")({
       { property: "og:title", content: "Contact — The Zero" },
       { property: "og:description", content: "Find us, call us, or stop by for dine-in and takeaway." },
     ],
+    links: [{ rel: "canonical", href: "https://thezerobd.lovable.app/contact" }],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "Restaurant",
+          name: "The Zero",
+          url: "https://thezerobd.lovable.app/contact",
+          telephone: "+880-1729-791000",
+          servesCuisine: ["Grill", "Pizza", "Cafe"],
+          priceRange: "৳৳",
+          address: {
+            "@type": "PostalAddress",
+            streetAddress: "BAFWWA Shopping Complex, Bir Uttam Ziaur Rahman Rd",
+            addressLocality: "Dhaka",
+            postalCode: "1212",
+            addressCountry: "BD",
+          },
+          openingHoursSpecification: [{
+            "@type": "OpeningHoursSpecification",
+            dayOfWeek: ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
+            opens: "10:00",
+            closes: "23:00",
+          }],
+        }),
+      },
+    ],
   }),
   component: ContactPage,
 });
@@ -31,7 +59,7 @@ function ContactPage() {
       <header className="max-w-2xl">
         <p className="animate-fade-up text-sm uppercase tracking-[0.3em] text-primary">Visit us</p>
         <h1 className="animate-fade-up mt-3 font-display text-5xl md:text-6xl" style={{ animationDelay: "120ms" }}>
-          Come <span className="text-gradient-gold">say hello.</span>
+          Contact & Directions <span className="text-gradient-gold">for The Zero</span>
         </h1>
         <p className="animate-fade-up mt-5 text-muted-foreground" style={{ animationDelay: "240ms" }}>
           Dine-in and takeaway available. Call ahead for groups or bookings.
@@ -54,14 +82,14 @@ function ContactPage() {
         <Reveal>
           <div className="hover-lift h-full rounded-2xl border border-border bg-card p-8">
             <div className="float-slow grid h-11 w-11 place-items-center rounded-xl bg-gradient-gold text-primary-foreground"><UtensilsCrossed className="h-5 w-5" /></div>
-            <h3 className="mt-4 font-display text-2xl">Dine-In</h3>
+            <h2 className="mt-4 font-display text-2xl">Dine-In</h2>
             <p className="mt-2 text-sm text-muted-foreground">Two floors of cosy seating with a dedicated smoking zone. Great for families and groups.</p>
           </div>
         </Reveal>
         <Reveal delay={120}>
           <div className="hover-lift h-full rounded-2xl border border-border bg-card p-8">
             <div className="float-slow grid h-11 w-11 place-items-center rounded-xl bg-gradient-gold text-primary-foreground"><ShoppingBag className="h-5 w-5" /></div>
-            <h3 className="mt-4 font-display text-2xl">Takeaway</h3>
+            <h2 className="mt-4 font-display text-2xl">Takeaway</h2>
             <p className="mt-2 text-sm text-muted-foreground">Call ahead and your order will be packed and ready when you arrive.</p>
           </div>
         </Reveal>
@@ -70,7 +98,7 @@ function ContactPage() {
       <section className="mt-12 grid gap-10 md:grid-cols-[1fr,1.3fr]">
         <Reveal>
           <div className="rounded-2xl border border-border bg-card p-8">
-            <h3 className="font-display text-2xl">Opening hours</h3>
+            <h2 className="font-display text-2xl">Opening hours</h2>
             <ul className="mt-5 divide-y divide-border/60">
               {hours.map(([d, t]) => (
                 <li key={d} className="flex items-center justify-between py-2.5 text-sm transition-colors hover:text-foreground">
