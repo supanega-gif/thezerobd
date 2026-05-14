@@ -11,6 +11,25 @@ export const Route = createFileRoute("/menu")({
       { property: "og:title", content: "Menu — The Zero" },
       { property: "og:description", content: "Peri-peri grills, wood-fired pizzas and house drinks." },
     ],
+    links: [{ rel: "canonical", href: "https://thezerobd.lovable.app/menu" }],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "Menu",
+          name: "The Zero Menu",
+          url: "https://thezerobd.lovable.app/menu",
+          hasMenuSection: [
+            { "@type": "MenuSection", name: "Grills" },
+            { "@type": "MenuSection", name: "Pizza" },
+            { "@type": "MenuSection", name: "Starters & Sides" },
+            { "@type": "MenuSection", name: "Cafe & Drinks" },
+            { "@type": "MenuSection", name: "Desserts" },
+          ],
+        }),
+      },
+    ],
   }),
   component: MenuPage,
 });
@@ -21,7 +40,7 @@ function MenuPage() {
       <header className="text-center">
         <p className="animate-fade-up text-sm uppercase tracking-[0.3em] text-primary">Our menu</p>
         <h1 className="animate-fade-up mt-3 font-display text-5xl md:text-6xl" style={{ animationDelay: "120ms" }}>
-          From our kitchen, <span className="text-gradient-gold">with care.</span>
+          Our Menu — <span className="text-gradient-gold">Grilled Chicken, Pizza & Cafe</span>
         </h1>
         <p className="animate-fade-up mx-auto mt-5 max-w-2xl text-muted-foreground" style={{ animationDelay: "240ms" }}>
           Approximate price range ৳400–1,600 per person. Prices include taxes.
