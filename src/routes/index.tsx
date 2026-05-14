@@ -16,6 +16,30 @@ export const Route = createFileRoute("/")({
       { property: "og:title", content: "The Zero — Family Restaurant in Dhaka" },
       { property: "og:description", content: "Grilled favourites, wood-fired pizza and warm hospitality." },
     ],
+    links: [{ rel: "canonical", href: "https://thezerobd.lovable.app/" }],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "Restaurant",
+          name: "The Zero",
+          description: "Family restaurant in Dhaka serving wood-fired grills, pizza and cafe favourites.",
+          url: "https://thezerobd.lovable.app/",
+          telephone: "+880-1729-791000",
+          servesCuisine: ["Grill", "Pizza", "Cafe"],
+          priceRange: "৳৳",
+          address: {
+            "@type": "PostalAddress",
+            streetAddress: "BAFWWA Shopping Complex, Bir Uttam Ziaur Rahman Rd",
+            addressLocality: "Dhaka",
+            postalCode: "1212",
+            addressCountry: "BD",
+          },
+          openingHours: "Mo-Su 10:00-23:00",
+        }),
+      },
+    ],
   }),
   component: Home,
 });
@@ -45,6 +69,8 @@ function Home() {
           alt="Signature peri-peri grilled chicken at The Zero"
           width={1600}
           height={1100}
+          fetchPriority="high"
+          decoding="async"
           style={{
             transform: `translate3d(0, ${scrollY * 0.3}px, 0) scale(${1 + heroProgress * 0.35})`,
           }}
@@ -56,7 +82,7 @@ function Home() {
             <span className="h-1.5 w-1.5 rounded-full bg-primary" /> Taste the Art <span className="h-1.5 w-1.5 rounded-full bg-primary" />
           </p>
           <h1 className="animate-fade-up max-w-3xl font-display text-5xl leading-[1.05] sm:text-6xl md:text-7xl" style={{ animationDelay: "250ms" }}>
-            Where flavour <span className="text-gradient-gold">meets warmth.</span>
+            The Zero — <span className="text-gradient-gold">Family Restaurant in Dhaka</span>
           </h1>
           <p className="animate-fade-up mt-6 max-w-xl text-lg text-muted-foreground" style={{ animationDelay: "400ms" }}>
             Grilled favourites, wood-fired pizza and hand-crafted drinks — served by a team that treats every guest like family.
@@ -128,7 +154,7 @@ function Home() {
               Whether you are stopping in for a quick grilled platter or settling in for a long evening with family, our team is here to make it memorable.
             </p>
             <Button asChild className="mt-8 bg-gradient-gold text-primary-foreground hover:opacity-90 transition-transform hover:-translate-y-0.5">
-              <Link to="/about">Read more</Link>
+              <Link to="/about">Read our story</Link>
             </Button>
           </Reveal>
         </div>
