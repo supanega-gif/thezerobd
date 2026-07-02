@@ -1,15 +1,54 @@
-// @lovable.dev/vite-tanstack-config already includes the following — do NOT add them manually
-// or the app will break with duplicate plugins:
-//   - tanstackStart, viteReact, tailwindcss, tsConfigPaths, cloudflare (build-only),
-//     componentTagger (dev-only), VITE_* env injection, @ path alias, React/TanStack dedupe,
-//     error logger plugins, and sandbox detection (port/host/strictPort).
-// You can pass additional config via defineConfig({ vite: { ... } }) if needed.
-import { defineConfig } from "@lovable.dev/vite-tanstack-config";
+import { defineConfig, loadEnv } from "vite";
+import tailwindcss from "@tailwindcss/vite";
+import tsConfigPaths from "vite-tsconfig-paths";
+import viteReact from "@vitejs/plugin-react";
+import { tanstackStart } from "@tanstack/react-start/plugin/vite";
+import { cloudflare } from "@cloudflare/vite-plugin";
 
-// Redirect TanStack Start's bundled server entry to src/server.ts (our SSR error wrapper).
-// @cloudflare/vite-plugin builds from this — wrangler.jsonc main alone is insufficient.
-export default defineConfig({
-  tanstackStart: {
-    server: { entry: "server" },
-  },
+// Standalone Vite config (previously wrapped by @lovable.dev/vite-tanstack-config,
+// which only made sense inside Lovable's own editor/sandbox). This does the same
+// core setup, minus the Lovable-editor-only pieces (component tagging, HMR bridge,
+// sandbox port/host detection), so the project builds and runs anywhere.
+export default defineConfig(({ command, mode }) => {
+  // Expose VITE_-prefixed env vars as import.meta.env.* at build time.
+  const env = loadEnv(mode, process.cwd(), "VITE_");
+  const envDefine = Object.fromEntries(
+    Object.entries(env).map(([key, value]) => [`import.meta.env.${key}`, JSON.stringify(value)]),
+  );
+
+  return {
+    define: envDefine,
+    resolve: {
+      alias: {
+        "@": `${process.cwd()}/src`,
+      },
+      dedupe: [
+        "react",
+        "react-dom",
+        "react/jsx-runtime",
+        "react/jsx-dev-runtime",
+        "@tanstack/react-query",
+        "@tanstack/query-core",
+      ],
+    },
+    server: {
+      host: true,
+      port: 8080,
+    },
+    plugins: [
+      tailwindcss(),
+      tsConfigPaths({ projects: ["./tsconfig.json"] }),
+      tanstackStart({
+        server: { entry: "server" },
+        importProtection: {
+          behavior: "error",
+          client: { files: ["**/server/**"], specifiers: ["server-only"] },
+        },
+      }),
+      viteReact(),
+      // Only needed for the Cloudflare Workers deploy target; harmless to
+      // leave in if you end up on Vercel or elsewhere, since it's build-only.
+      ...(command === "build" ? [cloudflare({ viteEnvironment: { name: "ssr" } })] : []),
+    ],
+  };
 });

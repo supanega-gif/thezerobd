@@ -2,16 +2,24 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Star } from "lucide-react";
 import { Reveal } from "@/components/reveal";
 import { menu } from "@/data/menu";
+import { SITE_URL } from "@/lib/site-config";
 
 export const Route = createFileRoute("/menu")({
   head: () => ({
     meta: [
       { title: "Menu — The Zero Restaurant, Dhaka" },
-      { name: "description", content: "Explore peri-peri grills, wood-fired pizzas, salads, sides, and desserts at The Zero." },
+      {
+        name: "description",
+        content:
+          "Explore peri-peri grills, wood-fired pizzas, salads, sides, and desserts at The Zero.",
+      },
       { property: "og:title", content: "Menu — The Zero" },
-      { property: "og:description", content: "Peri-peri grills, wood-fired pizzas and house drinks." },
+      {
+        property: "og:description",
+        content: "Peri-peri grills, wood-fired pizzas and house drinks.",
+      },
     ],
-    links: [{ rel: "canonical", href: "https://thezerobd.lovable.app/menu" }],
+    links: [{ rel: "canonical", href: `${SITE_URL}/menu` }],
     scripts: [
       {
         type: "application/ld+json",
@@ -19,7 +27,7 @@ export const Route = createFileRoute("/menu")({
           "@context": "https://schema.org",
           "@type": "Menu",
           name: "The Zero Menu",
-          url: "https://thezerobd.lovable.app/menu",
+          url: `${SITE_URL}/menu`,
           hasMenuSection: [
             { "@type": "MenuSection", name: "Grills" },
             { "@type": "MenuSection", name: "Pizza" },
@@ -39,10 +47,16 @@ function MenuPage() {
     <div className="mx-auto max-w-6xl px-4 py-20 sm:px-6">
       <header className="text-center">
         <p className="animate-fade-up text-sm uppercase tracking-[0.3em] text-primary">Our menu</p>
-        <h1 className="animate-fade-up mt-3 font-display text-5xl md:text-6xl" style={{ animationDelay: "120ms" }}>
+        <h1
+          className="animate-fade-up mt-3 font-display text-5xl md:text-6xl"
+          style={{ animationDelay: "120ms" }}
+        >
           Our Menu — <span className="text-gradient-gold">Grilled Chicken, Pizza & Cafe</span>
         </h1>
-        <p className="animate-fade-up mx-auto mt-5 max-w-2xl text-muted-foreground" style={{ animationDelay: "240ms" }}>
+        <p
+          className="animate-fade-up mx-auto mt-5 max-w-2xl text-muted-foreground"
+          style={{ animationDelay: "240ms" }}
+        >
           Approximate price range ৳400–1,600 per person. Prices include taxes.
         </p>
       </header>
@@ -51,7 +65,11 @@ function MenuPage() {
       <nav className="sticky top-16 z-30 mt-12 -mx-4 flex justify-center border-y border-border/60 bg-background/80 px-4 py-3 backdrop-blur-xl sm:-mx-6 sm:px-6">
         <div className="flex flex-wrap gap-x-8 gap-y-2 text-sm">
           {menu.map((c) => (
-            <a key={c.id} href={`#${c.id}`} className="nav-underline text-muted-foreground transition-colors hover:text-primary">
+            <a
+              key={c.id}
+              href={`#${c.id}`}
+              className="nav-underline text-muted-foreground transition-colors hover:text-primary"
+            >
               {c.title}
             </a>
           ))}
@@ -74,14 +92,17 @@ function MenuPage() {
                         {item.name}
                         {item.popular && (
                           <span className="ml-2 inline-flex items-center gap-1 rounded-full bg-accent/20 px-2 py-0.5 align-middle text-[10px] font-medium uppercase tracking-wider text-accent">
-                            <Star className="h-2.5 w-2.5 fill-current" />Popular
+                            <Star className="h-2.5 w-2.5 fill-current" />
+                            Popular
                           </span>
                         )}
                       </h3>
                       <div className="flex-1 border-b border-dashed border-border/60" />
                       <span className="font-display text-lg text-primary">{item.price}</span>
                     </div>
-                    <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">{item.description}</p>
+                    <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">
+                      {item.description}
+                    </p>
                   </article>
                 </Reveal>
               ))}

@@ -1,7 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import type {} from "@tanstack/react-start";
-
-const BASE_URL = "https://thezerobd.lovable.app";
+import { SITE_URL as BASE_URL } from "@/lib/site-config";
 
 interface SitemapEntry {
   path: string;

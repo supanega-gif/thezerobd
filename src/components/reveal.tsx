@@ -1,4 +1,11 @@
-import { useEffect, useRef, useState, type ReactNode, type ElementType, type CSSProperties } from "react";
+import {
+  useEffect,
+  useRef,
+  useState,
+  type ReactNode,
+  type ElementType,
+  type CSSProperties,
+} from "react";
 import { cn } from "@/lib/utils";
 
 type RevealProps = {
