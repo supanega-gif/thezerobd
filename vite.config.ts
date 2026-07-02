@@ -39,6 +39,10 @@ export default defineConfig(({ command, mode }) => {
       tailwindcss(),
       tsConfigPaths({ projects: ["./tsconfig.json"] }),
       tanstackStart({
+        prerender: {
+        enabled: true,
+        crawlLinks: true,
+      },
         server: { entry: "server" },
         importProtection: {
           behavior: "error",
