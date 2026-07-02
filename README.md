@@ -56,10 +56,3 @@ Two deploy targets are already configured — pick whichever you end up using an
 - **Cloudflare Workers** — `wrangler.jsonc` + `src/server.ts`. Deploy with `npx wrangler deploy` after `npm run build`.
 - **Vercel** — `vercel.json`. Note this currently has a generic SPA rewrite rule; since this is a server-rendered app, double check Vercel's TanStack Start deployment docs before relying on it as-is.
 
-## Notes on the cleanup
-
-This repo was simplified from the original Lovable export:
-- Removed the `@lovable.dev/vite-tanstack-config` dependency — `vite.config.ts` now configures Vite directly and works outside Lovable's environment.
-- Removed ~38 unused shadcn/ui components and their unused Radix/npm dependencies (only what's actually imported is kept).
-- Removed the `.lovable/` metadata folder and leftover Lovable branding (Twitter handle, temporary preview-image URL).
-- Centralized the site's canonical URL into one file instead of hardcoding it in five places.
