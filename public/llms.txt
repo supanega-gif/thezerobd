@@ -10,3 +10,4 @@ The Zero is a two-floor family restaurant on Bir Uttam Ziaur Rahman Road, Dhaka 
 - [Menu](/menu): Grilled chicken, wood-fired pizza, starters, cafe drinks and desserts with prices.
 - [About](/about): Story, values and interior of the restaurant.
 - [Contact](/contact): Address, phone, opening hours and directions.
+- [Book a Table](/reserve): Choose a table in a 3D floor plan and reserve it.

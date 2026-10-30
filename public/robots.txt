@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://thezerobd.lovable.app/sitemap.xml
+Sitemap: https://supanega-gif.github.io/thezerobd/sitemap.xml

@@ -14,20 +14,22 @@ src/
     menu.tsx       # Menu page
     about.tsx      # About page
     contact.tsx    # Contact / directions page
-    sitemap[.]xml.ts  # Generates /sitemap.xml at request time
+    reserve.tsx    # Book a Table page (date/time/guests -> pick table -> confirm)
   components/
     site-header.tsx / site-footer.tsx
+    restaurant-3d.tsx  # The 3D restaurant model used on the booking page
     reveal.tsx     # Scroll-in-view animation wrapper
-    ui/            # shadcn/ui primitives (only the ones actually used are kept)
-  data/menu.ts     # Menu items, prices, descriptions
+    ui/            # shadcn/ui primitives (button, input)
+  data/
+    menu.ts        # Menu items, prices, descriptions
+    tables.ts      # Seating plan: every table, its seats, floor and position
   lib/
-    site-config.ts # Single place to set the site's canonical domain
+    bookings.ts    # Booking rules: opening times, availability, form checks, saving
+    site-config.ts # The site's address (domain + base path)
     utils.ts       # `cn()` class-merging helper used by ui/ components
-    error-page.ts / error-capture.ts  # Branded fallback page for SSR crashes
   assets/          # Photos used across the site
-  server.ts        # Cloudflare Workers-style fetch handler (SSR entry)
-  start.ts         # TanStack Start server middleware config
 public/            # Static files served as-is (favicon, robots.txt, llms.txt)
+.github/workflows/deploy.yml  # Publishes the site to GitHub Pages on every push to main
 ```
 
 ## Getting started
@@ -36,23 +38,33 @@ Requires Node 20+.
 
 ```bash
 npm install
-npm run dev       # http://localhost:8080
-npm run build     # production build (client + SSR)
-npm run preview   # preview the production build locally
-npm run lint       
-npm run format     # prettier --write
+npm run dev       # http://localhost:8080/thezerobd/
+npm run build     # builds static HTML for every page into dist/client
+npm run lint
+npm run format    # prettier --write
 ```
 
-## Before going live
+## Table booking (demo)
 
-1. **Set your real domain** in `src/lib/site-config.ts` (`SITE_URL`). It feeds the canonical links, structured data (JSON-LD), and `/sitemap.xml`.
-2. **Add a social preview image.** `src/routes/__root.tsx` has commented-out `og:image`/`twitter:image` tags — the previous ones pointed at a temporary Lovable preview link that will eventually stop working. Drop a real image in `public/` and point those tags at it.
-3. Update `public/robots.txt` if you want to reference the sitemap explicitly.
+The **Book a Table** page (`/reserve`) lets a guest choose a date, time and party size,
+explore a 3D model of both floors, click a table to see the view from that seat, and
+confirm with their name and mobile number.
+
+- Only times with at least one free table big enough for the group are offered.
+- A booking holds a table for 2 hours (`BOOKING_HOURS` in `src/lib/bookings.ts`).
+- **This is a demo:** bookings are stored only in the visitor's browser (localStorage)
+  and are not sent to the restaurant. To make it real, replace `loadBookings`,
+  `saveBooking` and `cancelBooking` in `src/lib/bookings.ts` with calls to a backend,
+  and delete `takenByOtherGuests` (it marks some tables as booked so the demo looks busy).
+- To change the layout, edit `src/data/tables.ts`. The 3D view updates automatically.
 
 ## Deployment
 
-Two deploy targets are already configured — pick whichever you end up using and you can delete the other:
+The site is built as static files and hosted on **GitHub Pages** at
+https://supanega-gif.github.io/thezerobd/. Every push to `main` rebuilds and publishes it
+automatically (see the Actions tab on GitHub).
 
-- **Cloudflare Workers** — `wrangler.jsonc` + `src/server.ts`. Deploy with `npx wrangler deploy` after `npm run build`.
-- **Vercel** — `vercel.json`. Note this currently has a generic SPA rewrite rule; since this is a server-rendered app, double check Vercel's TanStack Start deployment docs before relying on it as-is.
-
+**Moving to a custom domain:** change `SITE_ORIGIN` and `BASE_PATH` in
+`src/lib/site-config.ts` (e.g. `"https://thezerobd.com"` and `""`), update the
+`Sitemap:` line in `public/robots.txt`, and set the domain under the repo's
+Settings → Pages.

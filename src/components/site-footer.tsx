@@ -53,6 +53,11 @@ export function SiteFooter() {
                 Contact
               </Link>
             </li>
+            <li>
+              <Link to="/reserve" className="hover:text-foreground">
+                Book a Table
+              </Link>
+            </li>
           </ul>
         </div>
       </div>

@@ -263,7 +263,7 @@ function Home() {
               Reserve your table <span className="text-gradient-gold">tonight</span>
             </h2>
             <p className="mt-4 text-muted-foreground">
-              Dine-in and takeaway available. Call us to plan your visit.
+              Choose your exact table in our 3D floor plan, or call us to plan your visit.
             </p>
             <div className="mt-8 flex flex-wrap justify-center gap-3">
               <Button
@@ -271,7 +271,7 @@ function Home() {
                 size="lg"
                 className="shimmer bg-gradient-gold text-primary-foreground hover:opacity-90 shadow-warm"
               >
-                <a href="tel:01729791000">Call 01729-791000</a>
+                <Link to="/reserve">Book a table</Link>
               </Button>
               <Button
                 asChild
@@ -279,7 +279,7 @@ function Home() {
                 variant="outline"
                 className="transition-transform hover:-translate-y-0.5"
               >
-                <Link to="/contact">Get directions</Link>
+                <a href="tel:01729791000">Call 01729-791000</a>
               </Button>
             </div>
           </Reveal>

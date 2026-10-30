@@ -9,6 +9,7 @@ const nav = [
   { to: "/menu", label: "Menu" },
   { to: "/about", label: "About" },
   { to: "/contact", label: "Contact" },
+  { to: "/reserve", label: "Book a Table" },
 ] as const;
 
 export function SiteHeader() {
@@ -51,7 +52,7 @@ export function SiteHeader() {
           >
             <a href="tel:01729791000">
               <Phone className="mr-2 h-4 w-4" />
-              Reserve
+              Call
             </a>
           </Button>
         </div>

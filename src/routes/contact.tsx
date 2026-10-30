@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { MapPin, Phone, Clock, UtensilsCrossed, ShoppingBag } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Reveal } from "@/components/reveal";
@@ -140,7 +140,7 @@ function ContactPage() {
         </Reveal>
       </div>
 
-      <section className="mt-12 grid gap-10 md:grid-cols-[1fr,1.3fr]">
+      <section className="mt-12 grid gap-10 md:grid-cols-[1fr_1.3fr]">
         <Reveal>
           <div className="rounded-2xl border border-border bg-card p-8">
             <h2 className="font-display text-2xl">Opening hours</h2>
@@ -159,10 +159,7 @@ function ContactPage() {
               asChild
               className="shimmer mt-6 w-full bg-gradient-gold text-primary-foreground hover:opacity-90"
             >
-              <a href="tel:01729791000">
-                <Phone className="mr-2 h-4 w-4" />
-                Call to reserve
-              </a>
+              <Link to="/reserve">Book a table online</Link>
             </Button>
           </div>
         </Reveal>
