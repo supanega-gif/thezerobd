@@ -93,6 +93,26 @@ export default function Restaurant3D(props: Props) {
         <CameraRig selected={props.selected} view={props.view} floor={props.floor} />
       </Canvas>
       <div ref={labelLayer} className="pointer-events-none absolute inset-0 overflow-hidden" />
+      <Legend />
+    </div>
+  );
+}
+
+// Colour key in the bottom-left corner of the 3D view.
+function Legend() {
+  const items = [
+    { color: COLORS.free, label: "Free" },
+    { color: COLORS.selected, label: "Your pick" },
+    { color: COLORS.taken, label: "Booked or too small" },
+  ];
+  return (
+    <div className="pointer-events-none absolute bottom-3 left-3 flex flex-wrap gap-3 rounded-md bg-slate/80 px-3 py-2 text-xs text-plaster">
+      {items.map((item) => (
+        <span key={item.label} className="flex items-center gap-1.5">
+          <span className="h-2.5 w-2.5 rounded-full" style={{ background: item.color }} />
+          {item.label}
+        </span>
+      ))}
     </div>
   );
 }
@@ -100,7 +120,9 @@ export default function Restaurant3D(props: Props) {
 // ---------- Camera ----------
 
 // Where the camera should be for each view.
-function cameraGoal(selected: RestaurantTable | null, view: CameraView) {
+// `aspect` is the view's width / height. On narrow (phone) screens the
+// overview camera moves further back so the whole room still fits.
+function cameraGoal(selected: RestaurantTable | null, view: CameraView, aspect: number) {
   if (view === "seat" && selected) {
     // Sit on the side of the table facing away from the room centre, so the
     // guest looks across their table into the restaurant.
@@ -113,7 +135,11 @@ function cameraGoal(selected: RestaurantTable | null, view: CameraView) {
       target: new THREE.Vector3(selected.x - away.x * 3, 0.9, selected.z - away.y * 3),
     };
   }
-  return { position: new THREE.Vector3(0, 11, 12), target: new THREE.Vector3(0, 0, 0) };
+  const zoomOut = Math.max(1, 1.5 / aspect);
+  return {
+    position: new THREE.Vector3(0, 11 * zoomOut, 12 * zoomOut),
+    target: new THREE.Vector3(0, 0, 0),
+  };
 }
 
 // Smoothly moves the camera when the view, table or floor changes. Stops as
@@ -129,8 +155,9 @@ function CameraRig({
 }) {
   const controls = useRef<OrbitControlsImpl>(null);
   const moving = useRef(true);
-  const { camera } = useThree();
-  const goal = useMemo(() => cameraGoal(selected, view), [selected, view]);
+  const { camera, size } = useThree();
+  const aspect = size.width / size.height;
+  const goal = useMemo(() => cameraGoal(selected, view, aspect), [selected, view, aspect]);
 
   useEffect(() => {
     moving.current = true;
@@ -152,7 +179,7 @@ function CameraRig({
       makeDefault
       enablePan={false}
       minDistance={view === "seat" ? 0.5 : 4}
-      maxDistance={22}
+      maxDistance={40}
       maxPolarAngle={Math.PI / 2.1} // don't go under the floor
       onStart={() => (moving.current = false)}
     />

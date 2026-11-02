@@ -18,12 +18,18 @@ src/
   components/
     site-header.tsx / site-footer.tsx
     restaurant-3d.tsx  # The 3D restaurant model used on the booking page
+    booking/       # Pieces of the Book a Table page:
+      when-picker.tsx    #   1. date, time and guests
+      table-list.tsx     #   2. tables as buttons (same as clicking in 3D)
+      booking-form.tsx   #   3. name + phone, saves the booking
+      my-bookings.tsx    #   the guest's bookings, with Cancel
     ui/            # shadcn/ui primitives (button, input)
   data/
     menu.ts        # Menu items, prices, descriptions
     tables.ts      # Seating plan: every table, its seats, floor and position
   lib/
     bookings.ts    # Booking rules: opening times, availability, form checks, saving
+    format.ts      # Friendly date and time text ("Tue 3 Nov", "6:30 PM")
     site-config.ts # The site's address (domain + base path)
     utils.ts       # `cn()` class-merging helper used by ui/ components
   assets/          # Photos used across the site
