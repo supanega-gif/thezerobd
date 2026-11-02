@@ -11,62 +11,49 @@ import {
 import appCss from "../styles.css?url";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
+import { Button } from "@/components/ui/button";
 import { SITE_ORIGIN } from "@/lib/site-config";
 import hero from "@/assets/hero.jpg";
 
 function NotFoundComponent() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background px-4">
-      <div className="max-w-md text-center">
-        <h1 className="text-7xl font-bold text-foreground">404</h1>
-        <h2 className="mt-4 text-xl font-semibold text-foreground">Page not found</h2>
-        <p className="mt-2 text-sm text-muted-foreground">
-          The page you're looking for doesn't exist or has been moved.
-        </p>
-        <div className="mt-6">
-          <Link
-            to="/"
-            className="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
-          >
-            Go home
-          </Link>
-        </div>
-      </div>
-    </div>
+    <Message
+      title="We couldn't find that page"
+      text="It may have moved. Head back home or see the menu."
+    >
+      <Button asChild>
+        <Link to="/">Go home</Link>
+      </Button>
+    </Message>
   );
 }
 
 function ErrorComponent({ error, reset }: ErrorComponentProps) {
   console.error(error);
   const router = useRouter();
-
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background px-4">
-      <div className="max-w-md text-center">
-        <h1 className="text-xl font-semibold tracking-tight text-foreground">
-          This page didn't load
-        </h1>
-        <p className="mt-2 text-sm text-muted-foreground">
-          Something went wrong on our end. You can try refreshing or head back home.
-        </p>
-        <div className="mt-6 flex flex-wrap justify-center gap-2">
-          <button
-            onClick={() => {
-              router.invalidate();
-              reset();
-            }}
-            className="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
-          >
-            Try again
-          </button>
-          <Link
-            to="/"
-            className="inline-flex items-center justify-center rounded-md border border-input bg-background px-4 py-2 text-sm font-medium text-foreground transition-colors hover:bg-accent"
-          >
-            Go home
-          </Link>
-        </div>
-      </div>
+    <Message title="This page didn't load" text="Refresh to try again, or head back home.">
+      <Button
+        onClick={() => {
+          router.invalidate();
+          reset();
+        }}
+      >
+        Try again
+      </Button>
+      <Button asChild variant="outline">
+        <Link to="/">Go home</Link>
+      </Button>
+    </Message>
+  );
+}
+
+function Message(props: { title: string; text: string; children: React.ReactNode }) {
+  return (
+    <div className="mx-auto max-w-xl px-5 py-32">
+      <h1 className="text-5xl">{props.title}</h1>
+      <p className="mt-4 text-muted-foreground">{props.text}</p>
+      <div className="mt-8 flex flex-wrap gap-3">{props.children}</div>
     </div>
   );
 }
@@ -76,6 +63,7 @@ export const Route = createRootRoute({
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
+      { name: "theme-color", content: "#263134" },
       { title: "The Zero — Family Restaurant in Dhaka" },
       {
         name: "description",
@@ -106,7 +94,7 @@ export const Route = createRootRoute({
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {
         rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Inter:wght@300;400;500;600&display=swap",
+        href: "https://fonts.googleapis.com/css2?family=Gloock&family=Hanken+Grotesk:wght@400;500;600&display=swap",
       },
       { rel: "stylesheet", href: appCss },
     ],

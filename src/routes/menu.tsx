@@ -1,6 +1,4 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Star } from "lucide-react";
-import { Reveal } from "@/components/reveal";
 import { menu } from "@/data/menu";
 import { SITE_URL } from "@/lib/site-config";
 
@@ -44,69 +42,54 @@ export const Route = createFileRoute("/menu")({
 
 function MenuPage() {
   return (
-    <div className="mx-auto max-w-6xl px-4 py-20 sm:px-6">
-      <header className="text-center">
-        <p className="animate-fade-up text-sm uppercase tracking-[0.3em] text-primary">Our menu</p>
-        <h1
-          className="animate-fade-up mt-3 font-display text-5xl md:text-6xl"
-          style={{ animationDelay: "120ms" }}
-        >
-          Our Menu — <span className="text-gradient-gold">Grilled Chicken, Pizza & Cafe</span>
-        </h1>
-        <p
-          className="animate-fade-up mx-auto mt-5 max-w-2xl text-muted-foreground"
-          style={{ animationDelay: "240ms" }}
-        >
-          Approximate price range ৳400–1,600 per person. Prices include taxes.
+    <div className="mx-auto max-w-6xl px-5 py-16 md:py-20">
+      <header className="max-w-2xl">
+        <h1 className="text-6xl md:text-7xl">Menu</h1>
+        <p className="mt-4 text-muted-foreground">
+          Most guests spend ৳400 to ৳1,600 each. Prices include taxes.
         </p>
       </header>
 
-      {/* category nav */}
-      <nav className="sticky top-16 z-30 mt-12 -mx-4 flex justify-center border-y border-border/60 bg-background/80 px-4 py-3 backdrop-blur-xl sm:-mx-6 sm:px-6">
-        <div className="flex flex-wrap gap-x-8 gap-y-2 text-sm">
+      {/* Jump to a section */}
+      <nav
+        aria-label="Menu sections"
+        className="sticky top-[72px] z-30 -mx-5 mt-10 overflow-x-auto border-y border-slate/15 bg-concrete/95 px-5 backdrop-blur"
+      >
+        <ul className="flex gap-6 whitespace-nowrap py-3 text-sm">
           {menu.map((c) => (
-            <a
-              key={c.id}
-              href={`#${c.id}`}
-              className="nav-underline text-muted-foreground transition-colors hover:text-primary"
-            >
-              {c.title}
-            </a>
+            <li key={c.id}>
+              <a href={`#${c.id}`} className="text-muted-foreground hover:text-slate">
+                {c.title}
+              </a>
+            </li>
           ))}
-        </div>
+        </ul>
       </nav>
 
-      <div className="mt-16 space-y-20">
+      {/* The menu card */}
+      <div className="mt-10 rounded-md bg-plaster px-6 py-4 md:px-12 md:py-8">
         {menu.map((cat) => (
-          <section key={cat.id} id={cat.id} className="scroll-mt-32">
-            <Reveal className="mb-8 flex items-center gap-4">
-              <h2 className="font-display text-3xl md:text-4xl">{cat.title}</h2>
-              <div className="h-px flex-1 bg-gradient-to-r from-border to-transparent" />
-            </Reveal>
-            <div className="grid gap-x-12 gap-y-6 md:grid-cols-2">
-              {cat.items.map((item, i) => (
-                <Reveal key={item.name} delay={(i % 6) * 70}>
-                  <article className="group rounded-xl p-2 transition-colors hover:bg-card/60">
-                    <div className="flex items-baseline gap-3">
-                      <h3 className="font-display text-xl transition-colors group-hover:text-primary">
-                        {item.name}
-                        {item.popular && (
-                          <span className="ml-2 inline-flex items-center gap-1 rounded-full bg-accent/20 px-2 py-0.5 align-middle text-[10px] font-medium uppercase tracking-wider text-accent">
-                            <Star className="h-2.5 w-2.5 fill-current" />
-                            Popular
-                          </span>
-                        )}
-                      </h3>
-                      <div className="flex-1 border-b border-dashed border-border/60" />
-                      <span className="font-display text-lg text-primary">{item.price}</span>
-                    </div>
-                    <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">
-                      {item.description}
-                    </p>
-                  </article>
-                </Reveal>
+          <section
+            key={cat.id}
+            id={cat.id}
+            className="scroll-mt-32 border-b border-slate/15 py-10 last:border-b-0"
+          >
+            <h2 className="text-3xl md:text-4xl">{cat.title}</h2>
+            <ul className="mt-6 grid gap-x-14 gap-y-6 md:grid-cols-2">
+              {cat.items.map((item) => (
+                <li key={item.name}>
+                  <div className="flex items-baseline gap-3">
+                    <h3 className="font-display text-xl">{item.name}</h3>
+                    <span className="flex-1 border-b border-dotted border-slate/30" />
+                    <span className="font-semibold text-velvet">{item.price}</span>
+                  </div>
+                  <p className="mt-1 text-sm text-muted-foreground">
+                    {item.description}
+                    {item.popular && <span className="ml-2 text-oak">House favourite</span>}
+                  </p>
+                </li>
               ))}
-            </div>
+            </ul>
           </section>
         ))}
       </div>

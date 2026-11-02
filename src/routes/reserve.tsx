@@ -158,23 +158,20 @@ function ReservePage() {
     .sort((a, b) => (a.date + a.time).localeCompare(b.date + b.time));
 
   return (
-    <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6">
+    <div className="mx-auto max-w-6xl px-5 py-16 md:py-20">
       <header className="max-w-2xl">
-        <p className="text-sm uppercase tracking-[0.3em] text-primary">Reservations</p>
-        <h1 className="mt-3 font-display text-5xl md:text-6xl">
-          Pick your <span className="text-gradient-gold">table</span>
-        </h1>
+        <h1 className="text-6xl md:text-7xl">Book a table</h1>
         <p className="mt-4 text-muted-foreground">
-          Choose when you're coming, then explore the restaurant in 3D and tap a glowing table to
-          see the view from your seat.
+          Choose when you're coming, then walk through the restaurant in 3D. Tap a brass table to
+          see the view from that seat.
         </p>
-        <p className="mt-3 inline-block rounded-md border border-primary/40 bg-primary/10 px-3 py-1.5 text-xs text-primary">
+        <p className="mt-4 border-l-2 border-brass pl-3 text-sm text-muted-foreground">
           Demo version: bookings are saved only in this browser and are not sent to the restaurant.
         </p>
       </header>
 
       {/* Step 1: when and how many */}
-      <section className="mt-10 grid gap-4 rounded-2xl border border-border bg-card p-5 sm:grid-cols-3">
+      <section className="mt-10 grid gap-4 rounded-md bg-plaster p-5 sm:grid-cols-3">
         <Field icon={CalendarDays} label="Date" htmlFor="date">
           <Input
             id="date"
@@ -229,19 +226,19 @@ function ReservePage() {
       {confirmed && (
         <div
           role="status"
-          className="mt-6 flex items-start gap-3 rounded-2xl border border-primary/50 bg-primary/10 p-5"
+          className="mt-6 flex items-start gap-3 rounded-md bg-velvet p-5 text-plaster"
         >
-          <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
+          <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0" />
           <div className="flex-1 text-sm">
-            <p className="font-display text-xl">You're booked!</p>
-            <p className="mt-1 text-muted-foreground">
+            <p className="font-display text-2xl">Your table is booked</p>
+            <p className="mt-1 text-plaster/85">
               Table {confirmed.tableId} for {confirmed.guests} on {formatDate(confirmed.date)} at{" "}
               {formatTime(confirmed.time)}. Reference{" "}
-              <span className="font-semibold text-foreground">{confirmed.id}</span>.
+              <span className="font-semibold text-plaster">{confirmed.id}</span>.
             </p>
           </div>
           <button aria-label="Close" onClick={() => setConfirmed(null)}>
-            <X className="h-4 w-4 text-muted-foreground" />
+            <X className="h-4 w-4" />
           </button>
         </div>
       )}
@@ -255,7 +252,6 @@ function ReservePage() {
                 key={f.id}
                 size="sm"
                 variant={floor === f.id ? "default" : "outline"}
-                className={floor === f.id ? "bg-gradient-gold text-primary-foreground" : ""}
                 onClick={() => changeFloor(f.id)}
               >
                 {f.label}
@@ -281,7 +277,7 @@ function ReservePage() {
             )}
           </div>
 
-          <div className="relative h-[420px] overflow-hidden rounded-2xl border border-border bg-[#1a1512] sm:h-[520px]">
+          <div className="relative h-[420px] overflow-hidden rounded-md bg-slate text-plaster sm:h-[520px]">
             {ready && has3D ? (
               <Suspense fallback={<CenterNote>Loading 3D view…</CenterNote>}>
                 <Restaurant3D
@@ -319,15 +315,15 @@ function ReservePage() {
                     onClick={() => selectTable(t)}
                     aria-pressed={status === "selected"}
                     className={cn(
-                      "w-full rounded-xl border p-3 text-left text-sm transition-colors",
-                      status === "selected" && "border-[#ff7a2f] bg-[#ff7a2f]/15",
-                      status === "free" && "border-primary/40 hover:bg-primary/10",
-                      !clickable && "cursor-not-allowed border-border opacity-50",
+                      "w-full rounded-md border p-3 text-left text-sm",
+                      status === "selected" && "border-velvet bg-velvet text-plaster",
+                      status === "free" && "border-slate/25 bg-plaster hover:border-velvet",
+                      !clickable && "cursor-not-allowed border-transparent opacity-45",
                     )}
                   >
-                    <span className="font-semibold">{t.id}</span> · {t.seats} seats
-                    <span className="block text-xs text-muted-foreground">
-                      {t.zone} ·{" "}
+                    <span className="font-semibold">{t.id}</span>, {t.seats} seats
+                    <span className="block text-xs opacity-75">
+                      {t.zone},{" "}
                       {status === "taken"
                         ? "Booked"
                         : status === "too-small"
@@ -342,16 +338,16 @@ function ReservePage() {
         </div>
 
         {/* Step 3: details */}
-        <aside className="h-fit rounded-2xl border border-border bg-card p-6">
+        <aside className="h-fit rounded-md bg-plaster p-6 lg:sticky lg:top-24">
           {selected ? (
             <form onSubmit={submit} noValidate>
-              <h2 className="font-display text-2xl">{selected.name}</h2>
+              <h2 className="text-3xl">{selected.name}</h2>
               <p className="mt-1 text-sm text-muted-foreground">
-                {selected.zone} · {selected.seats} seats ·{" "}
+                {selected.zone}, {selected.seats} seats,{" "}
                 {floors.find((f) => f.id === selected.floor)?.label}
               </p>
               <p className="mt-3 text-sm">
-                {formatDate(date)} at {formatTime(time)} · {guests}{" "}
+                {formatDate(date)} at {formatTime(time)}, {guests}{" "}
                 {guests === 1 ? "guest" : "guests"}
               </p>
 
@@ -386,17 +382,14 @@ function ReservePage() {
                     maxLength={NOTE_MAX}
                     value={form.note}
                     onChange={(e) => setForm({ ...form, note: e.target.value })}
-                    className="mt-1.5 w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+                    className="mt-1.5 w-full rounded-md border border-input bg-concrete/40 px-3 py-2"
                   />
                   {errors.note && <p className="mt-1 text-xs text-destructive">{errors.note}</p>}
                 </div>
               </div>
 
               {saveError && <p className="mt-4 text-sm text-destructive">{saveError}</p>}
-              <Button
-                type="submit"
-                className="shimmer mt-6 w-full bg-gradient-gold text-primary-foreground hover:opacity-90"
-              >
+              <Button type="submit" size="lg" className="mt-6 w-full">
                 Confirm booking
               </Button>
               <button
@@ -412,27 +405,27 @@ function ReservePage() {
             </form>
           ) : (
             <div className="text-sm text-muted-foreground">
-              <h2 className="font-display text-2xl text-foreground">Choose a table</h2>
+              <h2 className="text-3xl text-foreground">Choose a table</h2>
               <p className="mt-2">
-                Gold tables are free for your time. Grey ones are booked or too small for your
+                Brass tables are free at your time. Grey ones are booked or too small for your
                 group.
               </p>
             </div>
           )}
 
           {myUpcoming.length > 0 && (
-            <div className="mt-8 border-t border-border pt-5">
-              <h3 className="font-display text-lg">Your bookings</h3>
+            <div className="mt-8 border-t border-slate/15 pt-5">
+              <h3 className="text-xl">Your bookings</h3>
               <ul className="mt-3 space-y-2">
                 {myUpcoming.map((b) => (
                   <li
                     key={b.id}
-                    className="flex items-center justify-between gap-2 rounded-lg border border-border p-3 text-xs"
+                    className="flex items-center justify-between gap-2 border-b border-slate/15 py-3 text-xs"
                   >
                     <span>
                       <span className="font-semibold text-foreground">{b.id}</span>
                       <br />
-                      Table {b.tableId} · {formatDate(b.date)} · {formatTime(b.time)}
+                      Table {b.tableId}, {formatDate(b.date)} at {formatTime(b.time)}
                     </span>
                     <button
                       onClick={() => {
@@ -457,7 +450,7 @@ function ReservePage() {
 // ---------- Small helpers ----------
 
 const selectClass =
-  "flex h-9 w-full rounded-md border border-input bg-background px-3 py-1 text-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:opacity-50";
+  "flex h-11 w-full rounded-md border border-input bg-concrete/40 px-3 disabled:opacity-50";
 
 function Field({
   icon: Icon,
@@ -473,7 +466,7 @@ function Field({
   return (
     <div>
       <label htmlFor={htmlFor} className="mb-1.5 flex items-center gap-1.5 text-sm font-medium">
-        <Icon className="h-4 w-4 text-primary" /> {label}
+        <Icon className="h-4 w-4 text-velvet" /> {label}
       </label>
       {children}
     </div>
@@ -514,12 +507,12 @@ function TextField(props: {
 
 function Legend() {
   const items = [
-    ["#d9a441", "Available"],
-    ["#ff7a2f", "Your pick"],
-    ["#4a4541", "Booked / too small"],
+    ["#c9a24b", "Free"],
+    ["#38b2a3", "Your pick"],
+    ["#5d6669", "Booked or too small"],
   ];
   return (
-    <div className="pointer-events-none absolute bottom-3 left-3 flex flex-wrap gap-3 rounded-lg bg-black/50 px-3 py-2 text-xs">
+    <div className="pointer-events-none absolute bottom-3 left-3 flex flex-wrap gap-3 rounded-md bg-slate/80 px-3 py-2 text-xs">
       {items.map(([color, label]) => (
         <span key={label} className="flex items-center gap-1.5">
           <span className="h-2.5 w-2.5 rounded-full" style={{ background: color }} /> {label}
@@ -531,7 +524,7 @@ function Legend() {
 
 function CenterNote({ children }: { children: React.ReactNode }) {
   return (
-    <div className="grid h-full place-items-center p-6 text-center text-sm text-muted-foreground">
+    <div className="grid h-full place-items-center p-6 text-center text-sm text-plaster/70">
       {children}
     </div>
   );

@@ -1,7 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { MapPin, Phone, Clock, UtensilsCrossed, ShoppingBag } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Reveal } from "@/components/reveal";
 import { SITE_URL } from "@/lib/site-config";
 
 export const Route = createFileRoute("/contact")({
@@ -61,145 +59,55 @@ export const Route = createFileRoute("/contact")({
   component: ContactPage,
 });
 
-const hours = [
-  ["Monday", "10:00 AM – 11:00 PM"],
-  ["Tuesday", "10:00 AM – 11:00 PM"],
-  ["Wednesday", "10:00 AM – 11:00 PM"],
-  ["Thursday", "10:00 AM – 11:00 PM"],
-  ["Friday", "10:00 AM – 11:00 PM"],
-  ["Saturday", "10:00 AM – 11:00 PM"],
-  ["Sunday", "10:00 AM – 11:00 PM"],
-];
-
 function ContactPage() {
   return (
-    <div className="mx-auto max-w-6xl px-4 py-20 sm:px-6">
-      <header className="max-w-2xl">
-        <p className="animate-fade-up text-sm uppercase tracking-[0.3em] text-primary">Visit us</p>
-        <h1
-          className="animate-fade-up mt-3 font-display text-5xl md:text-6xl"
-          style={{ animationDelay: "120ms" }}
-        >
-          Contact & Directions <span className="text-gradient-gold">for The Zero</span>
-        </h1>
-        <p
-          className="animate-fade-up mt-5 text-muted-foreground"
-          style={{ animationDelay: "240ms" }}
-        >
-          Dine-in and takeaway available. Call ahead for groups or bookings.
-        </p>
-      </header>
+    <div className="mx-auto max-w-6xl px-5 py-16 md:py-20">
+      <h1 className="text-6xl md:text-7xl">Visit us</h1>
 
-      <div className="mt-14 grid gap-6 md:grid-cols-3">
-        {[
-          {
-            icon: MapPin,
-            title: "Address",
-            lines: ["BAFWWA Shopping Complex", "Bir Uttam Ziaur Rahman Rd", "Dhaka 1212"],
-          },
-          {
-            icon: Phone,
-            title: "Phone",
-            lines: [
-              <a key="p" href="tel:01729791000" className="text-foreground hover:text-primary">
+      <div className="mt-12 grid gap-12 md:grid-cols-[1fr_1.3fr]">
+        <div>
+          <dl className="divide-y divide-slate/15 border-y border-slate/15">
+            <Row label="Address">
+              BAFWWA Shopping Complex, Bir Uttam Ziaur Rahman Rd, Dhaka 1212
+            </Row>
+            <Row label="Phone">
+              <a href="tel:01729791000" className="text-velvet underline underline-offset-4">
                 01729-791000
-              </a>,
-            ],
-          },
-          { icon: Clock, title: "Hours", lines: ["Open daily", "10:00 AM – 11:00 PM"] },
-        ].map((c, i) => (
-          <Reveal key={c.title} delay={i * 100}>
-            <InfoCard icon={c.icon} title={c.title} lines={c.lines as React.ReactNode[]} />
-          </Reveal>
-        ))}
-      </div>
-
-      <div className="mt-10 grid gap-6 md:grid-cols-2">
-        <Reveal>
-          <div className="hover-lift h-full rounded-2xl border border-border bg-card p-8">
-            <div className="float-slow grid h-11 w-11 place-items-center rounded-xl bg-gradient-gold text-primary-foreground">
-              <UtensilsCrossed className="h-5 w-5" />
-            </div>
-            <h2 className="mt-4 font-display text-2xl">Dine-In</h2>
-            <p className="mt-2 text-sm text-muted-foreground">
-              Two floors of cosy seating with a dedicated smoking zone. Great for families and
-              groups.
-            </p>
-          </div>
-        </Reveal>
-        <Reveal delay={120}>
-          <div className="hover-lift h-full rounded-2xl border border-border bg-card p-8">
-            <div className="float-slow grid h-11 w-11 place-items-center rounded-xl bg-gradient-gold text-primary-foreground">
-              <ShoppingBag className="h-5 w-5" />
-            </div>
-            <h2 className="mt-4 font-display text-2xl">Takeaway</h2>
-            <p className="mt-2 text-sm text-muted-foreground">
-              Call ahead and your order will be packed and ready when you arrive.
-            </p>
-          </div>
-        </Reveal>
-      </div>
-
-      <section className="mt-12 grid gap-10 md:grid-cols-[1fr_1.3fr]">
-        <Reveal>
-          <div className="rounded-2xl border border-border bg-card p-8">
-            <h2 className="font-display text-2xl">Opening hours</h2>
-            <ul className="mt-5 divide-y divide-border/60">
-              {hours.map(([d, t]) => (
-                <li
-                  key={d}
-                  className="flex items-center justify-between py-2.5 text-sm transition-colors hover:text-foreground"
-                >
-                  <span className="text-muted-foreground">{d}</span>
-                  <span className="text-foreground">{t}</span>
-                </li>
-              ))}
-            </ul>
-            <Button
-              asChild
-              className="shimmer mt-6 w-full bg-gradient-gold text-primary-foreground hover:opacity-90"
-            >
-              <Link to="/reserve">Book a table online</Link>
+              </a>
+            </Row>
+            <Row label="Hours">Every day, 10 am to 11 pm</Row>
+            <Row label="Dine in">
+              Two floors of seating, a smoking zone, and room for families and groups.
+            </Row>
+            <Row label="Takeaway">Call ahead and your order will be packed when you arrive.</Row>
+          </dl>
+          <div className="mt-8 flex flex-wrap gap-3">
+            <Button asChild size="lg">
+              <Link to="/reserve">Book a table</Link>
+            </Button>
+            <Button asChild size="lg" variant="outline">
+              <a href="tel:01729791000">Call us</a>
             </Button>
           </div>
-        </Reveal>
+        </div>
 
-        <Reveal delay={150}>
-          <div className="overflow-hidden rounded-2xl border border-border">
-            <iframe
-              title="The Zero on Google Maps"
-              src="https://www.google.com/maps?q=BAFWWA+Shopping+Complex+Dhaka&output=embed"
-              className="h-full min-h-[420px] w-full"
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-            />
-          </div>
-        </Reveal>
-      </section>
+        <iframe
+          title="The Zero on Google Maps"
+          src="https://www.google.com/maps?q=The+Zero+Restaurant,+BAFWWA+Shopping+Complex,+Dhaka&output=embed"
+          className="min-h-[420px] w-full rounded-md border border-slate/15"
+          loading="lazy"
+          referrerPolicy="no-referrer-when-downgrade"
+        />
+      </div>
     </div>
   );
 }
 
-function InfoCard({
-  icon: Icon,
-  title,
-  lines,
-}: {
-  icon: typeof MapPin;
-  title: string;
-  lines: React.ReactNode[];
-}) {
+function Row({ label, children }: { label: string; children: React.ReactNode }) {
   return (
-    <div className="rounded-2xl border border-border bg-card p-6">
-      <div className="grid h-11 w-11 place-items-center rounded-xl bg-gradient-gold text-primary-foreground">
-        <Icon className="h-5 w-5" />
-      </div>
-      <h3 className="mt-4 font-display text-xl">{title}</h3>
-      <div className="mt-2 space-y-0.5 text-sm text-muted-foreground">
-        {lines.map((l, i) => (
-          <div key={i}>{l}</div>
-        ))}
-      </div>
+    <div className="grid grid-cols-[7rem_1fr] gap-4 py-4">
+      <dt className="text-sm text-muted-foreground">{label}</dt>
+      <dd>{children}</dd>
     </div>
   );
 }

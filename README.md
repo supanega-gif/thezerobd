@@ -18,7 +18,6 @@ src/
   components/
     site-header.tsx / site-footer.tsx
     restaurant-3d.tsx  # The 3D restaurant model used on the booking page
-    reveal.tsx     # Scroll-in-view animation wrapper
     ui/            # shadcn/ui primitives (button, input)
   data/
     menu.ts        # Menu items, prices, descriptions
@@ -43,6 +42,14 @@ npm run build     # builds static HTML for every page into dist/client
 npm run lint
 npm run format    # prettier --write
 ```
+
+## Design
+
+Colours and fonts live in `src/styles.css`. The palette comes from the restaurant itself:
+concrete (`bg-concrete`), plaster (`bg-plaster`), slate (`text-slate`), teal velvet for
+buttons and links (`bg-velvet`), brass for thin lines only (`border-brass`) and oak.
+Headings use Gloock, body text uses Hanken Grotesk (loaded from Google Fonts in `__root.tsx`).
+The `arch` class gives photos the rounded-top shape of the storefront and staircase arches.
 
 ## Table booking (demo)
 

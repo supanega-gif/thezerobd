@@ -1,69 +1,63 @@
 import { Link } from "@tanstack/react-router";
-import { MapPin, Phone, Clock } from "lucide-react";
-import logo from "@/assets/logo.png";
 
 export function SiteFooter() {
   return (
-    <footer className="border-t border-border/60 bg-card/40">
-      <div className="mx-auto grid max-w-7xl gap-10 px-4 py-14 sm:px-6 md:grid-cols-4">
+    <footer className="slats bg-slate text-plaster/80">
+      <div className="mx-auto grid max-w-6xl gap-10 px-5 py-16 sm:grid-cols-2 md:grid-cols-4">
         <div className="md:col-span-2">
-          <img src={logo} alt="The Zero" className="h-14 w-auto" />
-          <p className="mt-2 text-xs uppercase tracking-[0.4em] text-primary">Taste the Art</p>
-          <p className="mt-5 max-w-md text-sm text-muted-foreground">
-            A warm family restaurant in Dhaka serving grilled favourites, wood-fired pizza, and
-            hand-crafted drinks since day one.
+          <p className="font-display text-3xl text-plaster">The Zero</p>
+          <p className="mt-3 max-w-sm text-sm">
+            A two-floor family restaurant in the BAFWWA Shopping Complex, Dhaka. Grills, pizza and
+            coffee, every day.
           </p>
         </div>
 
-        <div>
-          <h4 className="font-display text-base text-foreground">Visit</h4>
-          <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
-            <li className="flex gap-2">
-              <MapPin className="mt-0.5 h-4 w-4 text-primary" />
-              BAFWWA Shopping Complex, Bir Uttam Ziaur Rahman Rd, Dhaka 1212
-            </li>
-            <li className="flex gap-2">
-              <Phone className="h-4 w-4 text-primary" />
-              <a href="tel:01729791000" className="hover:text-foreground">
-                01729-791000
-              </a>
-            </li>
-            <li className="flex gap-2">
-              <Clock className="h-4 w-4 text-primary" />
-              Open daily · 10 AM – 11 PM
-            </li>
-          </ul>
-        </div>
+        <address className="text-sm not-italic">
+          <p className="font-semibold text-plaster">Find us</p>
+          <p className="mt-2">
+            BAFWWA Shopping Complex
+            <br />
+            Bir Uttam Ziaur Rahman Rd
+            <br />
+            Dhaka 1212
+          </p>
+          <p className="mt-3">
+            <a href="tel:01729791000" className="hover:text-plaster">
+              01729-791000
+            </a>
+          </p>
+          <p className="mt-1">Open daily, 10 am to 11 pm</p>
+        </address>
 
-        <div>
-          <h4 className="font-display text-base text-foreground">Explore</h4>
-          <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
+        <nav className="text-sm" aria-label="Footer">
+          <p className="font-semibold text-plaster">Pages</p>
+          <ul className="mt-2 space-y-1.5">
             <li>
-              <Link to="/menu" className="hover:text-foreground">
+              <Link to="/menu" className="hover:text-plaster">
                 Menu
               </Link>
             </li>
             <li>
-              <Link to="/about" className="hover:text-foreground">
-                About
+              <Link to="/about" className="hover:text-plaster">
+                Our story
               </Link>
             </li>
             <li>
-              <Link to="/contact" className="hover:text-foreground">
-                Contact
+              <Link to="/contact" className="hover:text-plaster">
+                Visit
               </Link>
             </li>
             <li>
-              <Link to="/reserve" className="hover:text-foreground">
-                Book a Table
+              <Link to="/reserve" className="hover:text-plaster">
+                Book a table
               </Link>
             </li>
           </ul>
-        </div>
+        </nav>
       </div>
-      <div className="border-t border-border/60 py-5 text-center text-xs text-muted-foreground">
-        © {new Date().getFullYear()} The Zero Restaurant · Dhaka
-      </div>
+      <p className="border-t border-plaster/10 py-5 text-center text-xs text-plaster/60">
+        © {new Date().getFullYear()} The Zero Restaurant, Dhaka
+      </p>
     </footer>
   );
 }

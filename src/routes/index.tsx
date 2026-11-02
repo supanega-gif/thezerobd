@@ -1,12 +1,11 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Star, Clock, MapPin, Utensils, Flame, Coffee } from "lucide-react";
-import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Reveal } from "@/components/reveal";
+import storefrontNight from "@/assets/storefront-night.jpg";
 import hero from "@/assets/hero.jpg";
-import interior from "@/assets/interior-teal.jpg";
-import spread from "@/assets/spread.jpg";
+import interiorStairs from "@/assets/interior-stairs.jpg";
+import interiorTeal from "@/assets/interior-teal.jpg";
 import { menu } from "@/data/menu";
+import { tables } from "@/data/tables";
 import { SITE_URL } from "@/lib/site-config";
 
 export const Route = createFileRoute("/")({
@@ -53,247 +52,138 @@ export const Route = createFileRoute("/")({
   component: Home,
 });
 
-const highlights = [
-  {
-    icon: Flame,
-    title: "Wood-Fired Grills",
-    text: "Peri-peri, jerk and lemon-herb chicken kissed by open flame.",
-    category: "grills",
-  },
-  {
-    icon: Utensils,
-    title: "Pizza & Starters",
-    text: "Wood-fired pizzas, wings and shareable plates for the table.",
-    category: "pizza",
-  },
-  {
-    icon: Coffee,
-    title: "Cafe & Desserts",
-    text: "Lattes, mochas and our famous molten lava cake.",
-    category: "drinks",
-  },
-];
-
-const popular = menu.flatMap((c) => c.items.filter((i) => i.popular)).slice(0, 6);
+const popular = menu.flatMap((c) => c.items.filter((i) => i.popular)).slice(0, 5);
 
 function Home() {
-  const [scrollY, setScrollY] = useState(0);
-  useEffect(() => {
-    const onScroll = () => setScrollY(window.scrollY);
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-  const heroProgress = Math.min(scrollY / 600, 1);
   return (
     <>
-      {/* HERO */}
-      <section className="relative isolate overflow-hidden">
-        <img
-          src={hero}
-          alt="Signature peri-peri grilled chicken at The Zero"
-          width={1600}
-          height={1100}
-          fetchPriority="high"
-          decoding="async"
-          style={{
-            transform: `translate3d(0, ${scrollY * 0.3}px, 0) scale(${1 + heroProgress * 0.35})`,
-          }}
-          className="absolute inset-0 h-full w-full object-cover will-change-transform"
-        />
-        <div className="absolute inset-0 bg-hero-overlay" />
-        <div className="relative mx-auto flex min-h-[88vh] max-w-7xl flex-col justify-end px-4 pb-20 pt-32 sm:px-6 md:pb-28 md:pt-40">
-          <p
-            className="animate-fade-up mb-5 inline-flex items-center gap-3 self-start rounded-full border border-primary/40 bg-background/70 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.4em] text-primary shadow-warm backdrop-blur"
-            style={{ animationDelay: "100ms" }}
-          >
-            <span className="h-1.5 w-1.5 rounded-full bg-primary" /> Taste the Art{" "}
-            <span className="h-1.5 w-1.5 rounded-full bg-primary" />
+      {/* Hero: the storefront's brass arch, opening on page load */}
+      <section className="mx-auto grid max-w-6xl items-end gap-12 px-5 pb-20 pt-14 md:grid-cols-[1.15fr_1fr] md:pt-20">
+        <div className="md:pb-10">
+          <h1 className="text-6xl sm:text-7xl lg:text-8xl">Taste the art.</h1>
+          <p className="mt-6 max-w-md text-lg text-muted-foreground">
+            Peri-peri off the grill, wood-fired pizza and good coffee, served across two floors on
+            Bir Uttam Ziaur Rahman Road.
           </p>
-          <h1
-            className="animate-fade-up max-w-3xl font-display text-5xl leading-[1.05] sm:text-6xl md:text-7xl"
-            style={{ animationDelay: "250ms" }}
-          >
-            The Zero — <span className="text-gradient-gold">Family Restaurant in Dhaka</span>
-          </h1>
-          <p
-            className="animate-fade-up mt-6 max-w-xl text-lg text-muted-foreground"
-            style={{ animationDelay: "400ms" }}
-          >
-            Grilled favourites, wood-fired pizza and hand-crafted drinks — served by a team that
-            treats every guest like family.
-          </p>
-          <div
-            className="animate-fade-up mt-8 flex flex-wrap gap-3"
-            style={{ animationDelay: "550ms" }}
-          >
-            <Button
-              asChild
-              size="lg"
-              className="shimmer bg-gradient-gold text-primary-foreground hover:opacity-90 shadow-warm"
-            >
-              <Link to="/menu">Explore the Menu</Link>
+          <div className="mt-8 flex flex-wrap gap-3">
+            <Button asChild size="lg">
+              <Link to="/reserve">Book a table</Link>
             </Button>
-            <Button
-              asChild
-              size="lg"
-              variant="outline"
-              className="border-border bg-background/40 backdrop-blur transition-transform hover:-translate-y-0.5"
-            >
-              <Link to="/contact">Find Us</Link>
+            <Button asChild size="lg" variant="outline">
+              <Link to="/menu">See the menu</Link>
             </Button>
           </div>
-
-          <div
-            className="animate-fade-up mt-12 grid max-w-2xl gap-6 sm:grid-cols-3"
-            style={{ animationDelay: "700ms" }}
-          >
-            <Stat icon={Star} label="4.3 / 5 · 187 reviews" />
-            <Stat icon={Clock} label="Open daily · Closes 11 PM" />
-            <Stat icon={MapPin} label="BAFWWA, Dhaka 1212" />
-          </div>
-        </div>
-      </section>
-
-      {/* HIGHLIGHTS */}
-      <section className="mx-auto max-w-7xl px-4 py-24 sm:px-6">
-        <Reveal className="mb-14 text-center">
-          <p className="text-sm uppercase tracking-[0.3em] text-primary">What we do</p>
-          <h2 className="mt-3 font-display text-4xl md:text-5xl">A taste of every craving</h2>
-        </Reveal>
-        <div className="grid gap-6 md:grid-cols-3">
-          {highlights.map((h, i) => (
-            <Reveal key={h.title} delay={i * 120}>
-              <Link
-                to="/menu"
-                hash={h.category}
-                className="hover-lift group block h-full rounded-2xl border border-border bg-card p-8 hover:border-primary/40"
-              >
-                <div className="float-slow grid h-12 w-12 place-items-center rounded-xl bg-gradient-gold text-primary-foreground transition-transform group-hover:scale-110">
-                  <h.icon className="h-5 w-5" />
-                </div>
-                <h3 className="mt-5 font-display text-2xl">{h.title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{h.text}</p>
-              </Link>
-            </Reveal>
-          ))}
-        </div>
-      </section>
-
-      {/* SIGNATURE STORY */}
-      <section className="bg-card/40 py-24">
-        <div className="mx-auto grid max-w-7xl items-center gap-12 px-4 sm:px-6 md:grid-cols-2">
-          <Reveal>
-            <div className="img-zoom rounded-2xl shadow-warm">
-              <img
-                src={interior}
-                alt="The Zero restaurant warm interior"
-                width={1400}
-                height={900}
-                loading="lazy"
-                className="rounded-2xl object-cover"
-              />
+          <dl className="mt-12 grid max-w-md grid-cols-2 gap-6 border-t border-slate/20 pt-6 text-sm">
+            <div>
+              <dt className="text-muted-foreground">Open daily</dt>
+              <dd className="mt-1 font-semibold">10 am to 11 pm</dd>
             </div>
-          </Reveal>
-          <Reveal delay={150}>
-            <p className="text-sm uppercase tracking-[0.3em] text-primary">Our story</p>
-            <h2 className="mt-3 font-display text-4xl md:text-5xl">A warm corner of Dhaka.</h2>
-            <p className="mt-6 text-base leading-relaxed text-muted-foreground">
-              Tucked inside the BAFWWA Shopping Complex beside BAF Shaheen College, The Zero spreads
-              across two floors of cosy seating, soft amber lights and the comfortable buzz of
-              friends gathered over a good meal.
-            </p>
-            <p className="mt-4 text-base leading-relaxed text-muted-foreground">
-              Whether you are stopping in for a quick grilled platter or settling in for a long
-              evening with family, our team is here to make it memorable.
-            </p>
-            <Button
-              asChild
-              className="mt-8 bg-gradient-gold text-primary-foreground hover:opacity-90 transition-transform hover:-translate-y-0.5"
-            >
-              <Link to="/about">Read our story</Link>
-            </Button>
-          </Reveal>
+            <div>
+              <dt className="text-muted-foreground">On Google</dt>
+              <dd className="mt-1 font-semibold">4.2 from 231 reviews</dd>
+            </div>
+          </dl>
+        </div>
+
+        <div className="relative mx-auto w-full max-w-md">
+          {/* brass outline sits slightly offset behind the photo */}
+          <div
+            aria-hidden
+            className="arch absolute inset-0 translate-x-3 -translate-y-3 border-2 border-brass"
+          />
+          <div className="arch arch-open relative aspect-[3/4] bg-slate">
+            <img
+              src={storefrontNight}
+              alt="The Zero at night, its entrance framed by a lit arch"
+              fetchPriority="high"
+              className="h-full w-full object-cover object-[50%_60%]"
+            />
+          </div>
         </div>
       </section>
 
-      {/* POPULAR */}
-      <section className="mx-auto max-w-7xl px-4 py-24 sm:px-6">
-        <Reveal className="mb-14 flex flex-wrap items-end justify-between gap-4">
+      {/* Favourites */}
+      <section className="bg-plaster">
+        <div className="mx-auto grid max-w-6xl items-center gap-12 px-5 py-20 md:grid-cols-[1fr_1.2fr]">
+          <div className="arch mx-auto aspect-[4/5] w-full max-w-sm">
+            <img
+              src={hero}
+              alt="Peri-peri grilled chicken"
+              loading="lazy"
+              className="h-full w-full object-cover"
+            />
+          </div>
           <div>
-            <p className="text-sm uppercase tracking-[0.3em] text-primary">Loved by guests</p>
-            <h2 className="mt-3 font-display text-4xl md:text-5xl">Most popular</h2>
+            <h2 className="text-4xl md:text-5xl">What most people order</h2>
+            <ul className="mt-8">
+              {popular.map((item) => (
+                <li key={item.name} className="border-b border-slate/15 py-4">
+                  <div className="flex items-baseline gap-4">
+                    <span className="font-display text-xl">{item.name}</span>
+                    <span className="flex-1 border-b border-dotted border-slate/30" />
+                    <span className="font-semibold text-velvet">{item.price}</span>
+                  </div>
+                  <p className="mt-1 text-sm text-muted-foreground">{item.description}</p>
+                </li>
+              ))}
+            </ul>
+            <Link
+              to="/menu"
+              className="mt-6 inline-block font-semibold text-velvet underline underline-offset-4"
+            >
+              See the full menu
+            </Link>
           </div>
-          <Button asChild variant="outline" className="transition-transform hover:-translate-y-0.5">
-            <Link to="/menu">View full menu</Link>
-          </Button>
-        </Reveal>
-        <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-          {popular.map((item, i) => (
-            <Reveal key={item.name} delay={i * 80}>
-              <Link
-                to="/menu"
-                hash={menu.find((c) => c.items.includes(item))?.id}
-                className="hover-lift block h-full rounded-2xl border border-border bg-card p-6 hover:border-primary/40"
-              >
-                <div className="flex items-baseline justify-between gap-4">
-                  <h3 className="font-display text-xl">{item.name}</h3>
-                  <span className="font-display text-lg text-primary">{item.price}</span>
-                </div>
-                <p className="mt-2 text-sm text-muted-foreground">{item.description}</p>
-              </Link>
-            </Reveal>
-          ))}
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="relative isolate overflow-hidden">
-        <img
-          src={spread}
-          alt="A spread of pizza, wings, fries and drinks"
-          width={1400}
-          height={900}
-          loading="lazy"
-          className="ken-burns absolute inset-0 h-full w-full object-cover opacity-30"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/80 to-background/60" />
-        <div className="relative mx-auto max-w-3xl px-4 py-24 text-center sm:px-6">
-          <Reveal>
-            <h2 className="font-display text-4xl md:text-5xl">
-              Reserve your table <span className="text-gradient-gold">tonight</span>
-            </h2>
-            <p className="mt-4 text-muted-foreground">
-              Choose your exact table in our 3D floor plan, or call us to plan your visit.
-            </p>
-            <div className="mt-8 flex flex-wrap justify-center gap-3">
-              <Button
-                asChild
-                size="lg"
-                className="shimmer bg-gradient-gold text-primary-foreground hover:opacity-90 shadow-warm"
-              >
-                <Link to="/reserve">Book a table</Link>
-              </Button>
-              <Button
-                asChild
-                size="lg"
-                variant="outline"
-                className="transition-transform hover:-translate-y-0.5"
-              >
-                <a href="tel:01729791000">Call 01729-791000</a>
-              </Button>
-            </div>
-          </Reveal>
+      {/* The rooms, leading into the 3D booking */}
+      <section className="mx-auto max-w-6xl px-5 py-24">
+        <div className="max-w-2xl">
+          <h2 className="text-4xl md:text-5xl">Choose your seat before you arrive</h2>
+          <p className="mt-4 text-muted-foreground">
+            Walk through both floors in 3D, see the view from any of our {tables.length} tables, and
+            book the one you like.
+          </p>
         </div>
+        <div className="mt-12 grid gap-6 md:grid-cols-[1.4fr_1fr]">
+          <figure>
+            <img
+              src={interiorStairs}
+              alt="Dining room with the brass arch and staircase"
+              loading="lazy"
+              className="aspect-[4/3] w-full rounded-md object-cover"
+            />
+            <figcaption className="mt-3 text-sm text-muted-foreground">
+              The brass arch and the stairs to the first floor
+            </figcaption>
+          </figure>
+          <figure className="md:mt-24">
+            <img
+              src={interiorTeal}
+              alt="Teal velvet chairs, oak tables and plants"
+              loading="lazy"
+              className="aspect-[4/5] w-full rounded-md object-cover"
+            />
+            <figcaption className="mt-3 text-sm text-muted-foreground">
+              Teal velvet, oak and greenery
+            </figcaption>
+          </figure>
+        </div>
+        <Button asChild size="lg" className="mt-10">
+          <Link to="/reserve">Book a table in 3D</Link>
+        </Button>
+      </section>
+
+      {/* A guest's words */}
+      <section className="slats bg-slate text-plaster">
+        <figure className="mx-auto max-w-3xl px-5 py-24">
+          <blockquote className="font-display text-3xl leading-snug md:text-4xl">
+            “Tasty food, generous portions and the best service. Totally satisfied.”
+          </blockquote>
+          <figcaption className="mt-6 text-sm text-plaster/70">A recent guest on Google</figcaption>
+        </figure>
       </section>
     </>
-  );
-}
-
-function Stat({ icon: Icon, label }: { icon: typeof Star; label: string }) {
-  return (
-    <div className="flex items-center gap-3 rounded-xl border border-border/60 bg-background/40 p-3 backdrop-blur">
-      <Icon className="h-4 w-4 text-primary" />
-      <span className="text-xs text-muted-foreground">{label}</span>
-    </div>
   );
 }

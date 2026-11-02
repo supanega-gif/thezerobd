@@ -27,10 +27,10 @@ type Props = {
 };
 
 const COLORS: Record<TableStatus, string> = {
-  free: "#d9a441", // gold, matches the site's brand colour
-  selected: "#ff7a2f",
-  taken: "#4a4541",
-  "too-small": "#6b5d48",
+  free: "#c9a24b", // brass
+  selected: "#38b2a3", // teal velvet, lit
+  taken: "#5d6669",
+  "too-small": "#5d6669",
 };
 
 // Text labels (table numbers, signs) are drawn as normal HTML in this overlay
@@ -72,13 +72,13 @@ export default function Restaurant3D(props: Props) {
         style={{ touchAction: "none" }}
         aria-label="3D floor plan of The Zero"
       >
-        <color attach="background" args={["#1a1512"]} />
+        <color attach="background" args={["#263134"]} />
         <ambientLight intensity={0.55} />
         <directionalLight position={[4, 10, 6]} intensity={0.9} />
         <pointLight position={[0, 2.6, 0]} intensity={18} distance={14} color="#ffc27a" />
 
         <LabelLayer.Provider value={labelLayer}>
-          <Room floor={props.floor} />
+          <Room floor={props.floor} showSigns={props.view === "overview"} />
           {props.tables.map((table) => (
             <TableModel
               key={table.id}
@@ -248,11 +248,11 @@ function TableModel({
           <div
             className="whitespace-nowrap rounded-full px-2 py-0.5 text-xs font-semibold"
             style={{
-              background: clickable ? color : "#2a2522",
-              color: clickable ? "#1a1512" : "#9a8f85",
+              background: clickable ? color : "#33403f",
+              color: clickable ? "#1b2426" : "#a7b0b1",
             }}
           >
-            {table.id} · {table.seats}
+            {table.id}, {table.seats}
           </div>
         </Label>
       )}
@@ -271,7 +271,7 @@ function Chair({
 }) {
   // Turn the chair so its back is away from the table.
   const angle = Math.atan2(faceTowards[0] - position[0], faceTowards[2] - position[2]);
-  const color = dim ? "#3a302a" : "#7a5236";
+  const color = dim ? "#3d4a4c" : "#1f7a74"; // teal velvet chairs
   return (
     <group position={position} rotation={[0, angle, 0]}>
       <mesh position={[0, 0.45, 0]}>
@@ -292,15 +292,15 @@ function Chair({
 
 // ---------- Room ----------
 
-function Room({ floor }: { floor: Floor }) {
+function Room({ floor, showSigns }: { floor: Floor; showSigns: boolean }) {
   const { width, depth, height } = ROOM;
-  const wall = "#3b2f28";
+  const wall = "#4a5558"; // slate walls
   return (
     <group>
       {/* Wooden floor */}
       <mesh rotation={[-Math.PI / 2, 0, 0]}>
         <planeGeometry args={[width, depth]} />
-        <meshStandardMaterial color="#5a4030" />
+        <meshStandardMaterial color="#8a6a4a" /> {/* oak floor */}
       </mesh>
       {/* Back, left and right walls (front is open so we can look in) */}
       <mesh position={[0, height / 2, -depth / 2]}>
@@ -345,20 +345,20 @@ function Room({ floor }: { floor: Floor }) {
           {/* Order counter at the back */}
           <mesh position={[4, 0.55, -4.3]}>
             <boxGeometry args={[5, 1.1, 0.8]} />
-            <meshStandardMaterial color="#6e4a2f" />
+            <meshStandardMaterial color="#8a5a36" />
           </mesh>
-          <Sign position={[4, 1.6, -4.3]} text="Counter" />
-          <Sign position={[0, 0.3, 4.7]} text="Entrance" />
-          <Stairs />
+          {showSigns && <Sign position={[4, 1.6, -4.3]} text="Counter" />}
+          {showSigns && <Sign position={[0, 0.3, 4.7]} text="Entrance" />}
+          <Stairs showSign={showSigns} />
         </>
       ) : (
-        <Stairs />
+        <Stairs showSign={showSigns} />
       )}
     </group>
   );
 }
 
-function Stairs() {
+function Stairs({ showSign }: { showSign: boolean }) {
   return (
     <group position={[-1.5, 0, -4.3]}>
       {[0, 1, 2, 3, 4].map((i) => (
@@ -367,7 +367,7 @@ function Stairs() {
           <meshStandardMaterial color="#4a3a30" />
         </mesh>
       ))}
-      <Sign position={[0.8, 1.6, 0]} text="Stairs" />
+      {showSign && <Sign position={[0.8, 1.6, 0]} text="Stairs" />}
     </group>
   );
 }
@@ -375,7 +375,7 @@ function Stairs() {
 function Sign({ position, text }: { position: [number, number, number]; text: string }) {
   return (
     <Label position={position}>
-      <div className="whitespace-nowrap text-xs uppercase tracking-widest text-[#d9a441]/80">
+      <div className="whitespace-nowrap text-xs uppercase tracking-widest text-[#c9a24b]">
         {text}
       </div>
     </Label>
