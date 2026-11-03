@@ -7,5 +7,6 @@ export const getRouter = () =>
     routeTree,
     basepath: BASE_PATH || "/",
     scrollRestoration: true,
+    defaultViewTransition: true, // quick cross-fade between pages
     defaultPreloadStaleTime: 0,
   });

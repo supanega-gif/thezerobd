@@ -35,8 +35,14 @@ export function WhenPicker(props: Props) {
         />
       </div>
 
-      <div>
+      <div className="relative">
         <Label htmlFor="time" icon={<Clock />} text="Time" />
+        {/* Re-created whenever the list of open times changes, which plays a brief highlight. */}
+        <span
+          key={props.times.join()}
+          aria-hidden
+          className="flash pointer-events-none absolute inset-x-0 bottom-0 h-11 rounded-md"
+        />
         <select
           id="time"
           value={props.time}

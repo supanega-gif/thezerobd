@@ -57,9 +57,9 @@ const popular = menu.flatMap((c) => c.items.filter((i) => i.popular)).slice(0, 5
 function Home() {
   return (
     <>
-      {/* Hero: the storefront's brass arch, opening on page load */}
+      {/* Hero: "the lights come on". Animation styles are in styles.css, under Motion. */}
       <section className="mx-auto grid max-w-6xl items-end gap-12 px-5 pb-20 pt-14 md:grid-cols-[1.15fr_1fr] md:pt-20">
-        <div className="md:pb-10">
+        <div className="hero-text md:pb-10">
           <h1 className="text-6xl sm:text-7xl lg:text-8xl">Taste the art.</h1>
           <p className="mt-6 max-w-md text-lg text-muted-foreground">
             Peri-peri off the grill, wood-fired pizza and good coffee, served across two floors on
@@ -86,18 +86,31 @@ function Home() {
         </div>
 
         <div className="relative mx-auto w-full max-w-md">
-          {/* brass outline sits slightly offset behind the photo */}
-          <div
+          {/* Brass outline, slightly offset behind the photo. It draws itself on load. */}
+          <svg
             aria-hidden
-            className="arch absolute inset-0 translate-x-3 -translate-y-3 border-2 border-brass"
-          />
-          <div className="arch arch-open relative aspect-[3/4] bg-slate">
+            viewBox="0 0 300 400"
+            preserveAspectRatio="none"
+            className="hero-outline absolute inset-0 h-full w-full translate-x-3 -translate-y-3 overflow-visible"
+          >
+            <path
+              d="M1 400 V150 A149 149 0 0 1 299 150 V400"
+              fill="none"
+              stroke="var(--color-brass)"
+              strokeWidth="2"
+              vectorEffect="non-scaling-stroke"
+              pathLength={1}
+              strokeDasharray={1}
+            />
+          </svg>
+          <div className="arch hero-photo relative aspect-[3/4] bg-slate">
             <img
               src={storefrontNight}
               alt="The Zero at night, its entrance framed by a lit arch"
               fetchPriority="high"
               className="h-full w-full object-cover object-[50%_60%]"
             />
+            <div aria-hidden className="hero-glow pointer-events-none absolute inset-0" />
           </div>
         </div>
       </section>
@@ -105,7 +118,7 @@ function Home() {
       {/* Favourites */}
       <section className="bg-plaster">
         <div className="mx-auto grid max-w-6xl items-center gap-12 px-5 py-20 md:grid-cols-[1fr_1.2fr]">
-          <div className="arch mx-auto aspect-[4/5] w-full max-w-sm">
+          <div className="arch photo-zoom mx-auto aspect-[4/5] w-full max-w-sm">
             <img
               src={hero}
               alt="Peri-peri grilled chicken"
@@ -148,23 +161,27 @@ function Home() {
         </div>
         <div className="mt-12 grid gap-6 md:grid-cols-[1.4fr_1fr]">
           <figure>
-            <img
-              src={interiorStairs}
-              alt="Dining room with the brass arch and staircase"
-              loading="lazy"
-              className="aspect-[4/3] w-full rounded-md object-cover"
-            />
+            <div className="photo-zoom rounded-md">
+              <img
+                src={interiorStairs}
+                alt="Dining room with the brass arch and staircase"
+                loading="lazy"
+                className="aspect-[4/3] w-full object-cover"
+              />
+            </div>
             <figcaption className="mt-3 text-sm text-muted-foreground">
               The brass arch and the stairs to the first floor
             </figcaption>
           </figure>
           <figure className="md:mt-24">
-            <img
-              src={interiorTeal}
-              alt="Teal velvet chairs, oak tables and plants"
-              loading="lazy"
-              className="aspect-[4/5] w-full rounded-md object-cover"
-            />
+            <div className="photo-zoom rounded-md">
+              <img
+                src={interiorTeal}
+                alt="Teal velvet chairs, oak tables and plants"
+                loading="lazy"
+                className="aspect-[4/5] w-full object-cover"
+              />
+            </div>
             <figcaption className="mt-3 text-sm text-muted-foreground">
               Teal velvet, oak and greenery
             </figcaption>

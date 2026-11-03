@@ -53,7 +53,7 @@ function AboutPage() {
             </p>
           </div>
         </div>
-        <div className="arch mx-auto aspect-[3/4] w-full max-w-md">
+        <div className="arch photo-zoom mx-auto aspect-[3/4] w-full max-w-md">
           <img
             src={interiorStairs}
             alt="The brass arch and staircase inside The Zero"
@@ -66,20 +66,23 @@ function AboutPage() {
         <div className="mx-auto max-w-6xl px-5 py-20">
           <h2 className="text-4xl md:text-5xl">Inside The Zero</h2>
           <div className="mt-10 grid grid-cols-2 gap-4 md:grid-cols-3">
-            <img
-              src={storefrontNight}
-              alt="The Zero's storefront lit up at night"
-              loading="lazy"
-              className="col-span-2 row-span-2 h-full w-full rounded-md object-cover"
-            />
-            {photos.map((p) => (
+            <div className="photo-zoom col-span-2 row-span-2 rounded-md">
               <img
-                key={p.alt}
-                src={p.src}
-                alt={p.alt}
+                src={storefrontNight}
+                alt="The Zero's storefront lit up at night"
                 loading="lazy"
-                className="aspect-[4/3] w-full rounded-md object-cover"
+                className="h-full w-full object-cover"
               />
+            </div>
+            {photos.map((p) => (
+              <div key={p.alt} className="photo-zoom rounded-md">
+                <img
+                  src={p.src}
+                  alt={p.alt}
+                  loading="lazy"
+                  className="aspect-[4/3] w-full object-cover"
+                />
+              </div>
             ))}
           </div>
         </div>

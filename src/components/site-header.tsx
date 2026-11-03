@@ -26,10 +26,8 @@ export function SiteHeader() {
             <Link
               key={n.to}
               to={n.to}
-              className="text-sm text-plaster/75 hover:text-plaster"
-              activeProps={{
-                className: "text-plaster underline decoration-brass underline-offset-8",
-              }}
+              className="nav-link text-sm text-plaster/75 hover:text-plaster"
+              activeProps={{ className: "text-plaster" }}
             >
               {n.label}
             </Link>

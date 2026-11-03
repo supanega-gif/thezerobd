@@ -176,9 +176,9 @@ function ReservePage() {
       {confirmed && (
         <div
           role="status"
-          className="mt-6 flex items-start gap-3 rounded-md bg-velvet p-5 text-plaster"
+          className="slide-in mt-6 flex items-start gap-3 rounded-md bg-velvet p-5 text-plaster"
         >
-          <CheckCircle2 className="mt-1 h-5 w-5 shrink-0" />
+          <CheckCircle2 className="tick-draw mt-1 h-5 w-5 shrink-0" />
           <div className="flex-1">
             <p className="font-display text-2xl">Your table is booked</p>
             <p className="mt-1 text-sm text-plaster/85">

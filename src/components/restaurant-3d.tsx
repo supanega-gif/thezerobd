@@ -59,6 +59,9 @@ function Label({
   );
 }
 
+// True when the visitor's device is set to reduce motion.
+const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
 // Room size in metres (see src/data/tables.ts for the coordinate layout).
 const ROOM = { width: 16, depth: 10, height: 3 };
 
@@ -233,6 +236,14 @@ function TableModel({
   const color = COLORS[status];
   const glow = status === "selected" ? 0.6 : status === "free" ? 0.15 : 0;
 
+  // The chosen table gently pulses (unless the visitor has "reduce motion" on).
+  const topMaterial = useRef<THREE.MeshStandardMaterial>(null);
+  useFrame(({ clock }) => {
+    if (status === "selected" && topMaterial.current && !reduceMotion) {
+      topMaterial.current.emissiveIntensity = 0.45 + 0.25 * Math.sin(clock.elapsedTime * 2.5);
+    }
+  });
+
   return (
     <group
       position={[table.x, 0, table.z]}
@@ -253,7 +264,12 @@ function TableModel({
         ) : (
           <boxGeometry args={[length, 0.06, width]} />
         )}
-        <meshStandardMaterial color={color} emissive={color} emissiveIntensity={glow} />
+        <meshStandardMaterial
+          ref={topMaterial}
+          color={color}
+          emissive={color}
+          emissiveIntensity={glow}
+        />
       </mesh>
       {/* Table leg */}
       <mesh position={[0, 0.37, 0]}>
