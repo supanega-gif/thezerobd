@@ -70,7 +70,7 @@ export default function Restaurant3D(props: Props) {
   return (
     <div className="relative h-full w-full">
       <Canvas
-        camera={{ position: [0, 11, 12], fov: 45 }}
+        camera={{ position: [0, 11, 12], fov: NORMAL_FOV }}
         dpr={[1, 2]}
         style={{ touchAction: "none" }}
         aria-label="3D floor plan of The Zero"
@@ -133,10 +133,11 @@ function cameraGoal(selected: RestaurantTable | null, view: CameraView, aspect: 
     if (away.length() < 0.1) away.set(0, 1);
     away.normalize();
     const back = tableSize(selected).reach + 0.5;
-    return {
-      position: new THREE.Vector3(selected.x + away.x * back, 1.25, selected.z + away.y * back),
-      target: new THREE.Vector3(selected.x - away.x * 3, 0.9, selected.z - away.y * 3),
-    };
+    const eye = new THREE.Vector3(selected.x + away.x * back, 1.25, selected.z + away.y * back);
+    // The camera turns around a point just in front of the eyes, so dragging
+    // turns the head while the guest stays seated in the chair.
+    const look = new THREE.Vector3(-away.x, -0.12, -away.y).normalize().multiplyScalar(0.01);
+    return { position: eye, target: eye.clone().add(look) };
   }
   const zoomOut = Math.max(1, 1.5 / aspect);
   return {
@@ -173,20 +174,96 @@ function CameraRig({
     camera.position.lerp(goal.position, t);
     c.target.lerp(goal.target, t);
     c.update();
-    if (camera.position.distanceTo(goal.position) < 0.02) moving.current = false;
+    if (camera.position.distanceTo(goal.position) < 0.02) {
+      // Snap exactly into place. In the seat view this matters: the look point
+      // is only 1 cm ahead, so any leftover gap would point the head the wrong way.
+      camera.position.copy(goal.position);
+      c.target.copy(goal.target);
+      c.update();
+      moving.current = false;
+    }
   });
+
+  // Seat view: the head turns but never leaves the chair. Zoom is handled by
+  // SeatZoom (like a camera lens), and looking up/down is limited like a neck.
+  if (view === "seat" && selected) {
+    return (
+      <>
+        <SeatZoom />
+        <OrbitControls
+          key="seat"
+          ref={controls}
+          makeDefault
+          enablePan={false}
+          enableZoom={false}
+          rotateSpeed={-0.35} // drag the scene, like Street View
+          minPolarAngle={Math.PI * 0.25}
+          maxPolarAngle={Math.PI * 0.72}
+        />
+      </>
+    );
+  }
 
   return (
     <OrbitControls
+      key="overview"
       ref={controls}
       makeDefault
       enablePan={false}
-      minDistance={view === "seat" ? 0.5 : 4}
+      minDistance={4}
       maxDistance={40}
       maxPolarAngle={Math.PI / 2.1} // don't go under the floor
       onStart={() => (moving.current = false)}
     />
   );
+}
+
+// Zoom from the seat by narrowing the camera's field of view (scroll or pinch),
+// so the camera stays in the chair. Resets when leaving the seat.
+const NORMAL_FOV = 45;
+function SeatZoom() {
+  const { camera, gl } = useThree();
+
+  useEffect(() => {
+    const cam = camera as THREE.PerspectiveCamera;
+    const el = gl.domElement;
+    const setFov = (fov: number) => {
+      cam.fov = THREE.MathUtils.clamp(fov, 20, 70);
+      cam.updateProjectionMatrix();
+    };
+
+    const onWheel = (e: WheelEvent) => {
+      e.preventDefault();
+      setFov(cam.fov + e.deltaY * 0.03);
+    };
+
+    // Pinch: compare the distance between two fingers with the last one.
+    let lastGap = 0;
+    const gap = (e: TouchEvent) =>
+      Math.hypot(
+        e.touches[0].clientX - e.touches[1].clientX,
+        e.touches[0].clientY - e.touches[1].clientY,
+      );
+    const onTouchMove = (e: TouchEvent) => {
+      if (e.touches.length !== 2) return (lastGap = 0);
+      const now = gap(e);
+      if (lastGap) setFov(cam.fov * (lastGap / now));
+      lastGap = now;
+    };
+    const onTouchEnd = () => (lastGap = 0);
+
+    el.addEventListener("wheel", onWheel, { passive: false });
+    el.addEventListener("touchmove", onTouchMove);
+    el.addEventListener("touchend", onTouchEnd);
+    return () => {
+      el.removeEventListener("wheel", onWheel);
+      el.removeEventListener("touchmove", onTouchMove);
+      el.removeEventListener("touchend", onTouchEnd);
+      setFov(NORMAL_FOV);
+    };
+  }, [camera, gl]);
+
+  return null;
 }
 
 // ---------- Tables ----------

@@ -243,7 +243,9 @@ function ReservePage() {
             )}
           </div>
           <p className="mt-2 text-sm text-muted-foreground">
-            Drag to look around, scroll or pinch to zoom.
+            {view === "seat" && selected
+              ? "You're seated at this table. Drag to turn your head, scroll or pinch to zoom."
+              : "Drag to look around, scroll or pinch to zoom."}
           </p>
 
           {/* On phones the form is further down the page, so offer a shortcut to it. */}
