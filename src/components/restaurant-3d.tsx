@@ -160,6 +160,8 @@ function CameraRig({
   const controls = useRef<OrbitControlsImpl>(null);
   const moving = useRef(true);
   const { camera, size } = useThree();
+  // Fingers move further than a mouse for the same turn, so slow it down on touch screens.
+  const touch = useMemo(() => window.matchMedia("(pointer: coarse)").matches, []);
   const aspect = size.width / size.height;
   const goal = useMemo(() => cameraGoal(selected, view, aspect), [selected, view, aspect]);
 
@@ -196,7 +198,7 @@ function CameraRig({
           makeDefault
           enablePan={false}
           enableZoom={false}
-          rotateSpeed={-0.35} // drag the scene, like Street View
+          rotateSpeed={touch ? -0.18 : -0.35} // drag the scene, like Street View
           minPolarAngle={Math.PI * 0.25}
           maxPolarAngle={Math.PI * 0.72}
         />
@@ -210,6 +212,8 @@ function CameraRig({
       ref={controls}
       makeDefault
       enablePan={false}
+      rotateSpeed={touch ? 0.45 : 1}
+      zoomSpeed={touch ? 0.6 : 1}
       minDistance={4}
       maxDistance={40}
       maxPolarAngle={Math.PI / 2.1} // don't go under the floor
